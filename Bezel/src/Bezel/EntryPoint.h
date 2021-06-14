@@ -14,10 +14,18 @@ int main(int argc, char** argv) {
 	// Intro
 	std::cout << "Running with Bezel engine\n";
 
+	// Logger
+	auto logger = new Bezel::Log;
+	logger->Init();
+	BZ_CORE_WARN("Log initialized!");
+	int a = 5000;
+	BZ_CLIENT_INFO("This is information! Var={0}", a);
+
 	// Definer base applikasjon
 	auto app = Bezel::createApp();
 	app->run();
 	delete app;
+	delete logger;
 }
 
 #endif

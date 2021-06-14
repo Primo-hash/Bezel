@@ -1,3 +1,4 @@
+#include <spdlog/spdlog.h>
 #include <Bezel.h>
 
 class SandBox : public Bezel::App {

@@ -12,7 +12,6 @@ namespace Bezel {
 	}
 
 	void App::run() {
-		std::cout << "yo";
 		while (true);
 	}
 

@@ -8,7 +8,10 @@
 #include <iostream>
 
 // App klasse
-# include "Bezel/App.h"
+#include "Bezel/App.h"
+
+// Logging
+#include "Bezel/Log.h"
 
 // Inngang for applikasjonsdefinisjon
 #include "Bezel/EntryPoint.h"
