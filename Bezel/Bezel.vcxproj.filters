@@ -1,14 +1,31 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="src\Bezel\App.h" />
-    <ClInclude Include="src\Bezel.h" />
-    <ClInclude Include="src\Bezel\Core.h" />
-    <ClInclude Include="src\Bezel\EntryPoint.h" />
-    <ClInclude Include="src\Bezel\Log.h" />
+    <Filter Include="Bezel">
+      <UniqueIdentifier>{17C8E20C-83DC-0ABE-4C5E-AE1DB83107EF}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Bezel\App.cpp" />
-    <ClCompile Include="src\Bezel\Log.cpp" />
+    <ClInclude Include="src\Bezel.h" />
+    <ClInclude Include="src\Bezel\App.h">
+      <Filter>Bezel</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Bezel\Core.h">
+      <Filter>Bezel</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Bezel\EntryPoint.h">
+      <Filter>Bezel</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Bezel\Log.h">
+      <Filter>Bezel</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Bezel\App.cpp">
+      <Filter>Bezel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Bezel\Log.cpp">
+      <Filter>Bezel</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
