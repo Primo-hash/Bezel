@@ -13,7 +13,6 @@ public:
 	}
 };
 
-
 /*
 	Returns a new application sandbox defined by Bezel.
 */

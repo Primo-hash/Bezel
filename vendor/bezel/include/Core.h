@@ -22,3 +22,12 @@
 		#define NOT_EXPORTED
 	#endif
 #endif
+
+
+/*
+	For filtering events in certain application scenarios.
+	This allows for ignoring or focusing on certain events based on category.
+	For filtrering av events i spesifikke app scenarie.
+	Dette gjør at f.eks i meny så kan vi ignorere alle tastetrykk og bare ha museklikk.
+*/
+#define BIT(x) (1 << x)

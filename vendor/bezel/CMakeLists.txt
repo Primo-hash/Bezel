@@ -22,11 +22,17 @@ target_include_directories(${PROJECT_NAME} INTERFACE ../)
 add_library(Engine SHARED
 	"include/Entrypoint.h"
 	"include/Core.h"
-	"Bezel.h"
+	"include/App.h"
+	"include/Log.h"
 	"src/App.cpp" 
 	"src/Log.cpp" 
 	"include/Log.h" 
-	"include/App.h")
+	"include/events/Event.h"
+	"include/events/AppEvent.h" 
+	"include/events/KeyEvent.h"
+	"include/events/MouseEvent.h"
+	"Bezel.h"
+	)
 
 # Engine uses alias as Bezel here for linking
 target_link_libraries(Engine PUBLIC 
@@ -46,11 +52,11 @@ set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER
 
 # Compiler-specific flags to allow exporting symbols for Bezel
 if (${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU")
-    # G++
-    target_compile_options(Bezel::Engine PRIVATE -Wall -Wextra)
+    # G+
+    target_compile_options(Engine PRIVATE -Wall -Wextra -fPIC)
 elseif(${CMAKE_CXX_COMPILER_ID} STREQUAL "MSVC")
     # MSVC
-    target_compile_options(Bezel::Engine PRIVATE /EHsc /MTd /W2 /c)
+    target_compile_options(Engine PRIVATE /EHsc /MTd /W2 /c)
 endif()
 
 install(TARGETS ${PROJECT_NAME}
