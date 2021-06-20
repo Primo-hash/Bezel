@@ -1,7 +1,8 @@
-out/
+bin/*
+obj/*
 
 *.log
-
+vendor/bezel/vendor/spdlog/out/*
 .vs/
 **.sln
 **.vcxproj

@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 3.12)
 project(Sandbox)
 
 find_package(OpenGL REQUIRED)
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)	# For exporting in windows
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)		# For static libraries (spdlog) included by shared libraries
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
@@ -25,19 +27,3 @@ target_link_libraries(${PROJECT_NAME}
 	spdlog
 	OpenGL::GL
 	)
-
-IF($(CMAKE_SYSTEM_NAME) STREQUAL Windows)
-	#add_compile_definitions(
-	#BZ_PLATFORM_WINDOWS
-	#BZ_DEBUG
-	#)
-	set(ENV{BZ_PLATFORM_WINDOWS} 1)
-	set(ENV{BZ_BUILD_DLL} 1)
-ELSE($(CMAKE_SYSTEM_NAME) STREQUAL Linux)
-	#add_compile_definitions(
-	#BZ_PLATFORM_LINUX
-	#BZ_DEBUG
-	#)
-	set(ENV{BZ_PLATFORM_LINUX} 1)
-	set(ENV{BZ_BUILD_DLL} 1)
-ENDIF()

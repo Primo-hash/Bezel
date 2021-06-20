@@ -16,15 +16,17 @@ add_subdirectory(vendor/spdlog)
 
 # Scope
 add_library(${PROJECT_NAME} INTERFACE)
-target_include_directories(Bezel INTERFACE ../)
+target_include_directories(${PROJECT_NAME} INTERFACE ../)
 
 # Library files
 add_library(Engine SHARED
-	"src/entrypoint.cpp"
-	"src/entrypoint.h"
-	"bezel.h"
-	"src/core.h"
-	)
+	"include/Entrypoint.h"
+	"include/Core.h"
+	"Bezel.h"
+	"src/App.cpp" 
+	"src/Log.cpp" 
+	"include/Log.h" 
+	"include/App.h")
 
 # Engine uses alias as Bezel here for linking
 target_link_libraries(Engine PUBLIC 
@@ -41,6 +43,15 @@ add_library(Bezel::Engine ALIAS Bezel)
 set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER 
 	include/bezel.h
 	)
+
+# Compiler-specific flags to allow exporting symbols for Bezel
+if (${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU")
+    # G++
+    target_compile_options(Bezel::Engine PRIVATE -Wall -Wextra)
+elseif(${CMAKE_CXX_COMPILER_ID} STREQUAL "MSVC")
+    # MSVC
+    target_compile_options(Bezel::Engine PRIVATE /EHsc /MTd /W2 /c)
+endif()
 
 install(TARGETS ${PROJECT_NAME}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}

@@ -1,22 +1,22 @@
-#include "bezel/bezel.h"
-
-#include <iostream>
-#include <set>
-#include <cmath>
-#include <fstream>
-#include <memory>
-#include <vector>
+#include "bezel/Bezel.h"
+#include <spdlog/spdlog.h>
 
 
+class SandBox : public Bezel::App {
+public:
+	SandBox() {
 
-// -----------------------------------------------------------------------------
-// ENTRY POINT
-// -----------------------------------------------------------------------------
-int main()
-{
-	Bezel::EntryPoint::App();
-	while (true);
-	return EXIT_SUCCESS;
+	}
+
+	~SandBox() {
+
+	}
+};
+
+
+/*
+	Returns a new application sandbox defined by Bezel.
+*/
+Bezel::App* Bezel::createApp() {
+	return new SandBox();
 }
-
-
