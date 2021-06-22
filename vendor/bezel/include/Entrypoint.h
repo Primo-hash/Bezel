@@ -15,7 +15,7 @@ int main(int argc, char** argv) {
 	std::cout << "Running with Bezel engine\n";
 
 	// Logger
-	Bezel::Log::Init();
+	Bezel::Log::init();
 	BZ_CORE_WARN("Log initialized!");
 	int a = 5000;
 	BZ_CLIENT_INFO("This is information! Var={0}", a);

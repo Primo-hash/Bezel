@@ -1,10 +1,8 @@
+#pragma once
 /*
 *	Eksporterer bibliotek basert på platform for klasser som bruker BEZEL_API,
 *   DLL blir importert hvis ikke allerede importert.
 */
-
-
-#pragma once
 
 // Define EXPORTED for any platform
 #if defined _WIN32
@@ -18,16 +16,24 @@
 		#define EXPORTED __attribute__ ((visibility ("default")))
 		#define NOT_EXPORTED  __attribute__ ((visibility ("hidden")))
 	#else
-		#define EXPORTED
-		#define NOT_EXPORTED
+		#error Unsupported platform!
 	#endif
 #endif
 
-
 /*
-	For filtering events in certain application scenarios.
-	This allows for ignoring or focusing on certain events based on category.
 	For filtrering av events i spesifikke app scenarie.
 	Dette gjør at f.eks i meny så kan vi ignorere alle tastetrykk og bare ha museklikk.
 */
 #define BIT(x) (1 << x)
+
+
+/*
+	Logging assertions based on condition parameter x.
+*/
+#ifdef BZ_ENABLE_ASSERTS
+	#define BZ_CLIENT_ASSERT(x, ...) { if(!(x)) { HZ_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
+	#define BZ_CORE_ASSERT(x, ...) { if(!(x)) { HZ_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
+#else
+	#define BZ_CLIENT_ASSERT(x, ...)
+	#define BZ_CORE_ASSERT(x, ...)
+#endif

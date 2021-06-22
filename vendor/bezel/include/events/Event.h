@@ -1,8 +1,6 @@
 #pragma once
+#include "bezel/Precompiled.h"
 #include "bezel/include/Core.h"
-
-#include <string>
-#include <functional>
 
 // TODO: Create bus system for Event objects to avoid blocking (hanging up the sessions to process an event)
 // The bus will create a queue of events that are executed when it is possible for the Event system

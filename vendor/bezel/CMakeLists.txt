@@ -16,21 +16,24 @@ add_subdirectory(vendor/spdlog)
 
 # Scope
 add_library(${PROJECT_NAME} INTERFACE)
-target_include_directories(${PROJECT_NAME} INTERFACE ../)
+target_include_directories(${PROJECT_NAME} INTERFACE 
+../ 
+/include
+/src
+/platform
+)
+target_precompile_headers(${PROJECT_NAME} INTERFACE "Precompiled.h")
 
 # Library files
 add_library(Engine SHARED
-	"include/Entrypoint.h"
-	"include/Core.h"
-	"include/App.h"
-	"include/Log.h"
-	"src/App.cpp" 
-	"src/Log.cpp" 
-	"include/Log.h" 
-	"include/events/Event.h"
-	"include/events/AppEvent.h" 
-	"include/events/KeyEvent.h"
-	"include/events/MouseEvent.h"
+	# I am aware of the usage of GLOB to define directories
+	# However it is strongly discouraged because the build system won't know
+	# when to ask CMake to regenerate.
+	# That is why I have chosen to list manually
+	"include/Entrypoint.h" "include/Core.h" "include/App.h" "include/Log.h" "include/Window.h"
+	"include/events/Event.h" "include/events/AppEvent.h" "include/events/KeyEvent.h" "include/events/MouseEvent.h"
+	"src/App.cpp" "src/Log.cpp" 
+	"platform/desktop/DesktopWindow.cpp" "platform/desktop/DesktopWindow.h"
 	"Bezel.h"
 	)
 
@@ -53,10 +56,10 @@ set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER
 # Compiler-specific flags to allow exporting symbols for Bezel
 if (${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU")
     # G+
-    target_compile_options(Engine PRIVATE -Wall -Wextra -fPIC)
+    target_compile_options(Engine PRIVATE -Wall -Wextra -fPIC -Wno-dev)
 elseif(${CMAKE_CXX_COMPILER_ID} STREQUAL "MSVC")
     # MSVC
-    target_compile_options(Engine PRIVATE /EHsc /MTd /W2 /c)
+    target_compile_options(Engine PRIVATE -Wno-dev /EHsc /MTd /W2 /c)
 endif()
 
 install(TARGETS ${PROJECT_NAME}

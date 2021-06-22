@@ -1,8 +1,6 @@
 #pragma once
 #include "Event.h"
 
-#include <sstream>
-
 namespace Bezel {
 
 	/*
@@ -29,7 +27,7 @@ namespace Bezel {
 	};
 
 	/*
-		WindowResizeEvent handles closing of application window
+		WindowCloseEvent handles closing of application window
 	*/
 	class EXPORTED WindowCloseEvent : public Event {
 	public:
