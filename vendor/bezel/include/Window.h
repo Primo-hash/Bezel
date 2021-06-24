@@ -9,6 +9,8 @@
 #include "Core.h"
 #include "events/Event.h"
 
+#include "GLFW/glfw3.h"
+
 namespace Bezel {
 
 	/*
@@ -35,8 +37,10 @@ namespace Bezel {
 
 		virtual void onUpdate() = 0;	// Runs a series of functions for each frame
 
-		virtual unsigned int getWidth() const = 0;		// Retrieves the application window width
-		virtual unsigned int getHeight() const = 0;		// Retrieves the application window height
+		// Retrieves the application window width
+		virtual unsigned int getWidth() const = 0;
+		// Retrieves the application window height
+		virtual unsigned int getHeight() const = 0;
 
 		// Window attributes
 		virtual void setEventCallback(const EventCallbackFn& callback) = 0;	

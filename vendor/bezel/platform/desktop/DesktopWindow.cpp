@@ -5,6 +5,8 @@
 #include "bezel/include/events/MouseEvent.h"
 #include "bezel/include/events/KeyEvent.h"
 
+#include <glad/glad.h>
+
 namespace Bezel {
 
 	static bool s_GLFWInitialized = false;
@@ -66,9 +68,12 @@ namespace Bezel {
 		}
 
 		m_Window = glfwCreateWindow((int)specs.width, (int)specs.height, m_Data.title.c_str(), nullptr, nullptr);
-		glfwMakeContextCurrent(m_Window);				// Window context on current running program or thread
+		glfwMakeContextCurrent(m_Window);			// Window context on current running program or thread
+		// Init GLAD on the current process
+		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+		BZ_CORE_ASSERT(status, "GLAD failed to initialize!")
 		glfwSetWindowUserPointer(m_Window, &m_Data);	
-		setVSync(true);									// Vsync on by default
+		setVSync(true);								// Vsync on by default
 	
 		/*
 		The following callback functions utilize the GLFW library to abstract window events

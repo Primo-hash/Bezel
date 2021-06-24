@@ -44,14 +44,18 @@ namespace Bezel {
 	class EXPORTED Event {
 		friend class EventDispatcher;
 	protected:
-		bool m_Handled = false;	// Sjekk om Event er fullført etter eller under kjøretid
+		// Checks if event has been handled before or after runtime
+		// aswell as blocking events further down the layer stack from executing after allocation to a suitable layer.
+		bool m_Handled = false;
 	public:
+		bool handled = false;
+
 		virtual const char* GetName() const = 0;
 		virtual int GetCategoryFlags() const = 0;
 		virtual EventType GetEventType() const = 0;
 		virtual std::string ToString() const { return GetName(); }
 
-		inline bool IsInCategory(EventCategory category) { return GetCategoryFlags() &category; }
+		inline bool isInCategory(EventCategory category) { return GetCategoryFlags() &category; }
 	};
 	
 	/*
@@ -70,6 +74,7 @@ namespace Bezel {
 		bool Dispatch(EventFn<T> func) {
 			if (m_Event.GetEventType() == T::GetStaticType()) {
 				m_Event.m_Handled = func(*(T*)&m_Event);
+				m_Event.handled = func(*(T*)&m_Event);
 				return true;
 			}
 			else {

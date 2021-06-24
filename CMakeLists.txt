@@ -19,11 +19,15 @@ add_executable(${PROJECT_NAME}
 target_compile_definitions(${PROJECT_NAME} PRIVATE GLEW_STATIC)
 
 # Engine is the Bezel engine .lib file
+# The rest of linked libraries are there for convenience
+# since the engine utilizes them.
 target_link_libraries(${PROJECT_NAME}
 	Engine
+	glad
 	libglew_static
 	glfw
 	glm
+	imgui
 	spdlog
 	OpenGL::GL
 	)

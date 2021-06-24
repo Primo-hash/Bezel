@@ -6,15 +6,17 @@
 
 // Define EXPORTED for any platform
 #if defined _WIN32
-	# ifdef Engine_EXPORTS
+	# ifdef BZ_EXPORTS
 		#define EXPORTED  __declspec( dllexport )
 	#else
 		#define EXPORTED  __declspec( dllimport )
 	#endif
 #else
 	#if __GNUC__ >= 4
-		#define EXPORTED __attribute__ ((visibility ("default")))
-		#define NOT_EXPORTED  __attribute__ ((visibility ("hidden")))
+		# ifdef BZ_EXPORTS
+			#define EXPORTED __attribute__ ((visibility ("default")))
+			#define NOT_EXPORTED  __attribute__ ((visibility ("hidden")))
+		#endif
 	#else
 		#error Unsupported platform!
 	#endif
