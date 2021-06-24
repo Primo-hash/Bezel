@@ -1,14 +1,9 @@
 #include "bezel/Precompiled.h"
 #include "bezel/include/App.h"
-#include "bezel/include/Log.h"
 
-#include <glad/glad.h>
+#include "glad/glad.h"
 
 namespace Bezel {
-
-	// Usage of bind here a bit complicated, but I understand that this macro
-	// needs to fulfill a certain condition to run the event appended as a parameter.
-	#define BIND_EVENT_FN(x) std::bind(&App::x, this, std::placeholders::_1)
 
 	App* App::s_Instance = nullptr;
 
@@ -18,8 +13,9 @@ namespace Bezel {
 
 		// Simple test window to check the Window class and children's functionality
 		m_Window = std::unique_ptr<Window>(Window::create());
+
 		// Default set of keyboard, mouse and application events running by default
-		m_Window->setEventCallback(BIND_EVENT_FN(onEvent));
+		m_Window->setEventCallback(BZ_BIND_EVENT_FN(App::onEvent));
 	}
 
 	Bezel::App::~App() {
@@ -57,7 +53,7 @@ namespace Bezel {
 	*/
 	void App::onEvent(Event& e) {
 		EventDispatcher dispatcher(e);
-		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(onWindowClose));
+		dispatcher.Dispatch<WindowCloseEvent>(BZ_BIND_EVENT_FN(App::onWindowClose));
 
 		// Handle events in reverse, where overlays have priority
 		// Stops iteration if event has been handled

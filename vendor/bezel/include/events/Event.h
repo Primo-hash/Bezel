@@ -14,11 +14,11 @@ namespace Bezel {
 		WindowClose, WindowResize, WindowFocus, WindowLostFocus, WindowMoved,
 		MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled,
 		AppTick, AppUpdate, AppRender,
-		KeyPressed, KeyReleased
+		KeyPressed, KeyReleased, KeyTyped
 	};
 
 	/*
-		Definert event kategorier for filtering av kategorier gitt tillatelse basert på instans
+		Definert event kategorier for filtrering av kategorier gitt tillatelse basert på instans
 	*/
 	enum EventCategory
 	{

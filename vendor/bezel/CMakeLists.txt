@@ -52,9 +52,7 @@ add_library(Engine SHARED
 	
 	# ./
 	"Bezel.h"
-	 "GUI/ImGui/shader.cpp"
-	 "GUI/ImGui/shader.h"
-	  "GUI/ImGui/file_manager.cpp" "GUI/ImGui/file_manager.h")
+	 )
 
 # Engine uses alias as Bezel here for linking
 target_link_libraries(Engine PUBLIC 
@@ -87,9 +85,3 @@ set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER
 install(TARGETS ${PROJECT_NAME}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-
-add_custom_command(
-TARGET Engine POST_BUILD
-COMMAND ${CMAKE_COMMAND} -E copy_directory
-${CMAKE_CURRENT_LIST_DIR}/GUI/ImGui/assets
-${CMAKE_BINARY_DIR}/bin/assets)

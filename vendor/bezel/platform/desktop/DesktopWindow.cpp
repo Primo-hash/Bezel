@@ -82,7 +82,7 @@ namespace Bezel {
 		since the GLFW functions allow the passing of certain functions to be executed after the desired event.
 
 		These functions are made using lambdas and are tied to each Window object on construction respectively
-		This allows us to create Windows with different Events implemented based on which constructor they were initialized with.
+		This allows us to create Windows with different Events implemented based on different init functions they were initialized with.
 		*/
 		
 		/*
@@ -135,6 +135,15 @@ namespace Bezel {
 					break;
 				}
 			}
+		});
+
+		/*
+			Callback function glfwSetCharCallback for registering key typing (ex. in a textbox) and logging the event.
+		*/
+		glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int keycode) {
+			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+			KeyTypedEvent event(keycode);
+			data.EventCallback(event);
 		});
 
 		/*

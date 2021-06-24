@@ -21,7 +21,7 @@ namespace Bezel {
 		std::string title;
 		unsigned int width, height;
 
-		WindowSpecs(const std::string& title = "Bezel Engine", unsigned int width = 800, unsigned int height = 500) 
+		WindowSpecs(const std::string& title = "Bezel Engine", unsigned int width = 1080, unsigned int height = 720) 
 			: title(title), width(width), height(height) {}
 	};
 

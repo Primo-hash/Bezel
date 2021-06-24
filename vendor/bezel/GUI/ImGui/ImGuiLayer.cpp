@@ -3,46 +3,12 @@
 
 #include "imgui.h"
 #include "imgui_impl_opengl3.h"	// ImGui Renderer for OpenGL
-#include "GLFW/glfw3.h"	// Temporary hack before later abstraction
-#include "GL/glew.h"
-
-#include "shader.h"
-#include "file_manager.h"
 
 #include "bezel/include/App.h"
 
-#define PI 3.14159265358979323846
-
-// TEMPORARY
-void create_triangle(unsigned int& vbo, unsigned int& vao, unsigned int& ebo)
-{
-
-	// create the triangle
-	float triangle_vertices[] = {
-		0.0f, 0.25f, 0.0f,	// position vertex 1
-		1.0f, 1.0f, 1.0f,	 // color vertex 1
-		0.25f, -0.25f, 0.0f,  // position vertex 1
-		1.0f, 1.0f, 1.0f,	 // color vertex 1
-		-0.25f, -0.25f, 0.0f, // position vertex 1
-		1.0f, 1.0f, 1.0f,	 // color vertex 1
-	};
-	unsigned int triangle_indices[] = {
-		0, 1, 2 };
-	glGenVertexArrays(1, &vao);
-	glGenBuffers(1, &vbo);
-	glGenBuffers(1, &ebo);
-	glBindVertexArray(vao);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(triangle_vertices), triangle_vertices, GL_STATIC_DRAW);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(triangle_indices), triangle_indices, GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);
-}
+// Temporary hack before later abstraction
+#include "GLFW/glfw3.h"
+#include "glad/glad.h"
 
 namespace Bezel {
 
@@ -85,7 +51,6 @@ namespace Bezel {
 		io.KeyMap[ImGuiKey_Y] = GLFW_KEY_Y;
 		io.KeyMap[ImGuiKey_Z] = GLFW_KEY_Z;
 
-		bool err = glewInit() != GLEW_OK;
 		ImGui_ImplOpenGL3_Init("#version 410");
 	}
 
@@ -102,56 +67,99 @@ namespace Bezel {
 		io.DeltaTime = m_Time > 0.0f ? (time - m_Time) : (1.0f / 60.0f);
 		m_Time = time;
 
-		static bool show = true;
-
-		bool created = false;
-
-		Shader triangle_shader;
-
-		// create our geometries
-		unsigned int vbo, vao, ebo;
-		create_triangle(vbo, vao, ebo);
-		created = true;
-
-		// init shader
-		triangle_shader.init(FileManager::read("assets/shader.vs"), FileManager::read("assets/shader.fs"));
-
-
-		ImGui::SetNextWindowSize(ImVec2((float)100.0, (float)100.0));
 		// feed inputs to dear imgui, start new frame
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui::NewFrame();
-		//create_triangle(vbo, vao, ebo);
-
-		// rendering our geometries
-		triangle_shader.use();
-		glBindVertexArray(vao);
-		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
-		glBindVertexArray(0);
-
-		// render your GUI
-		ImGui::Begin("Triangle Position/Color");
-		static float rotation = 0.0;
-		ImGui::SliderFloat("rotation", &rotation, 0, 2 * PI);
-		static float translation[] = { 0.0, 0.0 };
-		ImGui::SliderFloat2("position", translation, -1.0, 1.0);
-		static float color[4] = { 1.0f,0.0f,1.0f,1.0f };
-		// pass the parameters to the shader
-		triangle_shader.setUniform("rotation", rotation);
-		triangle_shader.setUniform("translation", translation[0], translation[1]);
-		// color picker
-		ImGui::ColorEdit3("color", color);
-		// multiply triangle's color with this color
-		triangle_shader.setUniform("color", color[0], color[1], color[2]);
-		ImGui::End();
-
+		
+		static bool show = true;
+		ImGui::ShowDemoWindow(&show);
 
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	}
 
+	/*
+		Usage of EventDispatcher to check for all events relevant to this layer.
+	*/
 	void ImGuiLayer::onEvent(Event& event) {
-
+		EventDispatcher dispatcher(event);
+		dispatcher.Dispatch<MouseButtonPressedEvent>(BZ_BIND_EVENT_FN(ImGuiLayer::onMouseButtonPressedEvent));
+		dispatcher.Dispatch<MouseButtonReleasedEvent>(BZ_BIND_EVENT_FN(ImGuiLayer::onMouseButtonReleasedEvent));
+		dispatcher.Dispatch<MouseMovedEvent>(BZ_BIND_EVENT_FN(ImGuiLayer::onMouseMovedEvent));
+		dispatcher.Dispatch<MouseScrolledEvent>(BZ_BIND_EVENT_FN(ImGuiLayer::onMouseScrolledEvent));
+		dispatcher.Dispatch<KeyPressedEvent>(BZ_BIND_EVENT_FN(ImGuiLayer::onKeyPressedEvent));
+		dispatcher.Dispatch<KeyTypedEvent>(BZ_BIND_EVENT_FN(ImGuiLayer::onKeyTypedEvent));
+		dispatcher.Dispatch<KeyReleasedEvent>(BZ_BIND_EVENT_FN(ImGuiLayer::onKeyReleasedEvent));
+		dispatcher.Dispatch<WindowResizeEvent>(BZ_BIND_EVENT_FN(ImGuiLayer::onWindowResizeEvent));
 	}
 
+	/*
+		Implement this layer's events based on functions provided by ImGui examples
+	*/
+
+	bool ImGuiLayer::onMouseButtonPressedEvent(MouseButtonPressedEvent& e) {
+		ImGuiIO& io = ImGui::GetIO();
+		io.MouseDown[e.GetMouseButton()] = true;
+
+		return false;
+	}
+
+	bool ImGuiLayer::onMouseButtonReleasedEvent(MouseButtonReleasedEvent& e) {
+		ImGuiIO& io = ImGui::GetIO();
+		io.MouseDown[e.GetMouseButton()] = false;
+
+		return false;
+	}
+
+	bool ImGuiLayer::onMouseMovedEvent(MouseMovedEvent& e) {
+		ImGuiIO& io = ImGui::GetIO();
+		io.MousePos = ImVec2(e.GetX(), e.GetY());
+
+		return false;
+	}
+
+	bool ImGuiLayer::onMouseScrolledEvent(MouseScrolledEvent& e) {
+		ImGuiIO& io = ImGui::GetIO();
+		io.MouseWheelH += e.GetXOffset();
+		io.MouseWheel += e.GetYOffset();
+
+		return false;
+	}
+
+	bool ImGuiLayer::onKeyPressedEvent(KeyPressedEvent& e) {
+		ImGuiIO& io = ImGui::GetIO();
+		io.KeysDown[e.GetKeyCode()] = true;
+
+		io.KeyCtrl = io.KeysDown[GLFW_KEY_LEFT_CONTROL] || io.KeysDown[GLFW_KEY_RIGHT_CONTROL];
+		io.KeyShift = io.KeysDown[GLFW_KEY_LEFT_SHIFT] || io.KeysDown[GLFW_KEY_RIGHT_SHIFT];
+		io.KeyAlt = io.KeysDown[GLFW_KEY_LEFT_ALT] || io.KeysDown[GLFW_KEY_RIGHT_ALT];
+		io.KeySuper = io.KeysDown[GLFW_KEY_LEFT_SUPER] || io.KeysDown[GLFW_KEY_RIGHT_SUPER];
+		return false;
+	}
+
+	bool ImGuiLayer::onKeyReleasedEvent(KeyReleasedEvent& e) {
+		ImGuiIO& io = ImGui::GetIO();
+		io.KeysDown[e.GetKeyCode()] = false;
+
+		return false;
+	}
+
+	bool ImGuiLayer::onKeyTypedEvent(KeyTypedEvent& e) {
+		ImGuiIO& io = ImGui::GetIO();
+		int keycode = e.GetKeyCode();
+		if (keycode > 0 && keycode < 0x10000) {
+			io.AddInputCharacter((unsigned short)keycode);
+		}
+
+		return false;
+	}
+
+	bool ImGuiLayer::onWindowResizeEvent(WindowResizeEvent& e) {
+		ImGuiIO& io = ImGui::GetIO();
+		io.DisplaySize = ImVec2(e.GetWidth(), e.GetHeight());
+		io.DisplayFramebufferScale = ImVec2(1.0f, 1.0f);
+		glViewport(0, 0, e.GetWidth(), e.GetHeight());
+
+		return false;
+	}
 }
