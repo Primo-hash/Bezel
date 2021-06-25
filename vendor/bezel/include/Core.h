@@ -23,20 +23,30 @@
 #endif
 
 /*
-	For filtrering av events i spesifikke app scenarie.
-	Dette gjør at f.eks i meny så kan vi ignorere alle tastetrykk og bare ha museklikk.
+	Checks if Debugging mode enabled
 */
-#define BIT(x) (1 << x)
-
-#define BZ_BIND_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1)
+#ifdef BZ_DEBUG
+	#define BZ_ENABLE_ASSERTS
+#endif
 
 /*
 	Logging assertions based on condition parameter x.
 */
 #ifdef BZ_ENABLE_ASSERTS
-	#define BZ_CLIENT_ASSERT(x, ...) { if(!(x)) { HZ_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
-	#define BZ_CORE_ASSERT(x, ...) { if(!(x)) { HZ_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
+	#define BZ_CLIENT_ASSERT(x, ...) { if(!(x)) { BZ_CLIENT_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
+	#define BZ_CORE_ASSERT(x, ...) { if(!(x)) { BZ_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
 #else
 	#define BZ_CLIENT_ASSERT(x, ...)
 	#define BZ_CORE_ASSERT(x, ...)
 #endif
+
+/*
+	For filtrering av events i spesifikke app scenarie.
+	Dette gjør at f.eks i meny så kan vi ignorere alle tastetrykk og bare ha museklikk.
+*/
+#define BIT(x) (1 << x)
+
+/*
+	For binding custom Bezel events to GUI or renderer functions
+*/
+#define BZ_BIND_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1)

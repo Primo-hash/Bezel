@@ -66,6 +66,7 @@ target_link_libraries(Engine PUBLIC
 	OpenGL::GL)
 
 add_library(Bezel::Engine ALIAS Bezel)
+# BZ_DEBUG defined for Debug specific logging (more verbose), BZ_EXPORTS To export functions/classes from dll
 target_compile_definitions(Engine PRIVATE GLFW_INCLUDE_NONE BZ_EXPORTS)
 
 # Compiler-specific flags to allow exporting symbols for Bezel

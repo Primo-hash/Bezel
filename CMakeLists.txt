@@ -16,7 +16,7 @@ add_executable(${PROJECT_NAME}
 	sandbox.cpp
 	)
 
-target_compile_definitions(${PROJECT_NAME} PRIVATE GLEW_STATIC)
+target_compile_definitions(${PROJECT_NAME} PRIVATE GLEW_STATIC BZ_DEBUG)
 
 # Engine is the Bezel engine .lib file
 # The rest of linked libraries are there for convenience
