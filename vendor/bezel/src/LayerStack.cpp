@@ -4,7 +4,7 @@
 namespace Bezel {
 
 	LayerStack::LayerStack() {
-		m_LayerInsert = m_Layers.begin();	// Only for use by class members
+		
 	}
 
 	LayerStack::~LayerStack() {
@@ -20,7 +20,8 @@ namespace Bezel {
 	void LayerStack::pushLayer(Layer* layer) {
 		// Insert Layer at the beginning of the vector
 		// Allocate more space if needed
-		m_LayerInsert = m_Layers.emplace(m_LayerInsert, layer);
+		m_Layers.emplace(m_Layers.begin() + m_LayerInsertIndex, layer);
+		m_LayerInsertIndex++;
 	}
 
 	/*
@@ -40,7 +41,7 @@ namespace Bezel {
 		auto it = std::find(m_Layers.begin(), m_Layers.end(), layer);
 		if (it != m_Layers.end()) {
 			m_Layers.erase(it);
-			m_LayerInsert--;		// Moves starting pointer one element backward
+			m_LayerInsertIndex--;		// Moves starting pointer one element backward
 		}
 	}
 

@@ -18,6 +18,10 @@ namespace Bezel {
 
 		// Default set of keyboard, mouse and application events running by default
 		m_Window->setEventCallback(BZ_BIND_EVENT_FN(App::onEvent));
+
+		// Native GUI instance overlay for the application
+		m_ImGuiLayer = new ImGuiLayer();
+		pushOverlay(m_ImGuiLayer);
 	}
 
 	Bezel::App::~App() {
@@ -37,13 +41,19 @@ namespace Bezel {
 		// Simple window test
 		while (m_Running) {
 			// Draw simple background
-			glClearColor(1, 0.3, 0.5, 1);
+			glClearColor(0.5546875, 0.5546875, 0.5546875, 1);
 			glClear(GL_COLOR_BUFFER_BIT);
 
 			// Event handling by layer priority
 			for (Layer* layer : m_LayerStack) {
 				layer->onUpdate();
 			}
+
+			// Render GUI
+			m_ImGuiLayer->begin();
+			for (Layer* layer : m_LayerStack)
+				layer->onImGuiRender();
+			m_ImGuiLayer->end();
 
 			m_Window->onUpdate();
 		}

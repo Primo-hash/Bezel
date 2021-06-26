@@ -6,15 +6,18 @@
 #include "events/Event.h"
 #include "events/AppEvent.h"
 
+#include "bezel/GUI/ImGui/ImGuiLayer.h"
 
 namespace Bezel {
 
 	class EXPORTED App {
 	private:
-		static App* s_Instance;
-	private:
+		static App* s_Instance;		// Application instance called by client
+
 		std::unique_ptr<Window> m_Window;
 		LayerStack m_LayerStack;
+		
+		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 
 		bool onWindowClose(WindowCloseEvent& e);

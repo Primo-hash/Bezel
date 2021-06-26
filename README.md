@@ -13,6 +13,8 @@ same purpose but optimized for different platforms.
 
 ## Requirements  
 #### CMake  
+#### ImGui
+* 'docking' branch on github because the engine implements viewport and docking features (required)
 
 # File structure
 

@@ -13,10 +13,10 @@ namespace Bezel {
 	public:
 		WindowResizeEvent(unsigned int width, unsigned int height) : m_Width(width), m_Height(height) {}
 
-		inline unsigned int GetWidth() const { return m_Width; }
-		inline unsigned int GetHeight() const { return m_Height; }
+		inline unsigned int getWidth() const { return m_Width; }
+		inline unsigned int getHeight() const { return m_Height; }
 
-		std::string ToString() const override {
+		std::string toString() const override {
 			std::stringstream ss;
 			ss << "WindowResizeEvent: " << m_Width << ", " << m_Height;
 			return ss.str();

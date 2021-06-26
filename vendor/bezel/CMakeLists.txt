@@ -19,11 +19,8 @@ add_subdirectory(vendor/spdlog)
 # Scope
 add_library(${PROJECT_NAME} INTERFACE)
 target_include_directories(${PROJECT_NAME} INTERFACE 
-../ 
-/include
-/src
-/platform
-)
+	../
+	)
 
 target_precompile_headers(${PROJECT_NAME} INTERFACE "Precompiled.h")
 
@@ -35,7 +32,7 @@ add_library(Engine SHARED
 	# That is why I have chosen to list manually
 
 	# /GUI/ImGui
-	"GUI/ImGui/ImGuiLayer.cpp" "GUI/ImGui/ImGuiLayer.h"
+	"GUI/ImGui/ImGuiLayer.cpp" "GUI/ImGui/ImGuiLayer.h" "GUI/ImGui/ImGuiBuild.h"
 
 	# /include
 	"include/Entrypoint.h" "include/Core.h" "include/App.h" "include/Log.h" "include/Window.h"
