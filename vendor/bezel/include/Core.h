@@ -1,4 +1,6 @@
 #pragma once
+#include <signal.h>
+
 /*
 *	Eksporterer bibliotek basert på platform for klasser som bruker BEZEL_API,
 *   DLL blir importert hvis ikke allerede importert.
@@ -34,8 +36,20 @@
 	Logging assertions based on condition parameter x.
 */
 #ifdef BZ_ENABLE_ASSERTS
-	#define BZ_CLIENT_ASSERT(x, ...) { if(!(x)) { BZ_CLIENT_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
-	#define BZ_CORE_ASSERT(x, ...) { if(!(x)) { BZ_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
+	#if defined BZ_PLATFORM_WINDOWS
+		#define BZ_CLIENT_ASSERT(x, ...) { if(!(x)) { BZ_CLIENT_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
+		#define BZ_CORE_ASSERT(x, ...) { if(!(x)) { BZ_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
+	#elif defined BZ_PLATFORM_UNIX
+		#if defined SIGTRAP
+			#define BZ_CLIENT_ASSERT(x, ...) { if(!(x)) { BZ_CLIENT_ERROR("Assertion Failed: {0}", __VA_ARGS__); raise(SIGTRAP); } }
+			#define BZ_CORE_ASSERT(x, ...) { if(!(x)) { BZ_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); raise(SIGTRAP); } }
+		#else
+			#define BZ_CLIENT_ASSERT(x, ...) { if(!(x)) { BZ_CLIENT_ERROR("Assertion Failed: {0}", __VA_ARGS__); raise(SIGABRT); } }
+			#define BZ_CORE_ASSERT(x, ...) { if(!(x)) { BZ_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); raise(SIGABRT); } }
+		#endif
+	#else
+		#error The program might be running on an unsupported platform, supported platforms(WINDOWS, UNIX)
+	#endif
 #else
 	#define BZ_CLIENT_ASSERT(x, ...)
 	#define BZ_CORE_ASSERT(x, ...)
