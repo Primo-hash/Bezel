@@ -47,6 +47,9 @@ namespace Bezel {
 		virtual void setVSync(bool enabled) = 0;	// Enable/disable vsync
 		virtual bool isVSync() const = 0;			// Checks if vsync enabled/disabled
 
+		// To get native window types like GLFWwindow from GLFW for example.
+		virtual void* getNativeWindow() const = 0;
+
 		// Returns pointer to a new Window object
 		static Window* create(const WindowSpecs& props = WindowSpecs());
 	};

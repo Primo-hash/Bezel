@@ -45,6 +45,9 @@ namespace Bezel {
 		inline void setEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }
 		void setVSync(bool enabled) override;
 		bool isVSync() const override;
+
+		// To get native window types like GLFWwindow from GLFW for example.
+		inline virtual void* getNativeWindow() const { return m_Window; }
 	};
 }
 

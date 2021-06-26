@@ -5,21 +5,22 @@
 */
 
 // Define EXPORTED for any platform
-#if defined _WIN32
-	# ifdef BZ_EXPORTS
+#if defined BZ_PLATFORM_WINDOWS
+	#ifdef BZ_EXPORTS
 		#define EXPORTED  __declspec( dllexport )
 	#else
 		#define EXPORTED  __declspec( dllimport )
 	#endif
-#else
-	#if __GNUC__ >= 4
-		# ifdef BZ_EXPORTS
-			#define EXPORTED __attribute__ ((visibility ("default")))
-			#define NOT_EXPORTED  __attribute__ ((visibility ("hidden")))
-		#endif
+#elif defined BZ_PLATFORM_UNIX
+	#ifdef BZ_EXPORTS
+		#define EXPORTED __attribute__ ((visibility ("default")))
+		#define NOT_EXPORTED  __attribute__ ((visibility ("hidden")))
 	#else
-		#error Unsupported platform!
+		#define EXPORTED
+		#define NOT_EXPORTED
 	#endif
+#else
+	#error The program might be running on an unsupported platform, supported platforms(WINDOWS, UNIX)
 #endif
 
 /*

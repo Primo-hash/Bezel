@@ -1,5 +1,5 @@
 ﻿# Bezel
-A game engine influenced by the Hazel engine tutorial from TheCherno.
+A graphics engine influenced by the Hazel engine tutorial from TheCherno.
 Source: https://github.com/TheCherno/Hazel
 
 Author: Abdulhadi Al-Sayed
@@ -10,6 +10,9 @@ for cross platform adoption. The Bezel engine exists in the top vendor directory
 and runs its own dependencies from another vendor directory.
 The engine logic is made with STL headers and should be able to implement multiple libraries with the
 same purpose but optimized for different platforms.
+
+## Requirements  
+#### CMake  
 
 # File structure
 

@@ -48,11 +48,12 @@ add_library(Engine SHARED
 	"src/App.cpp" "src/Log.cpp" "src/Layer.cpp" "src/LayerStack.cpp"
 	
 	# /platform
-	"platform/desktop/DesktopWindow.cpp" "platform/desktop/DesktopWindow.h"
-	
+	"platform/desktop/DesktopWindow.cpp" "platform/desktop/DesktopWindow.h" 
+	"platform/desktop/DesktopInput.cpp" "platform/desktop/DesktopInput.h"
+
 	# ./
 	"Bezel.h"
-	 )
+	)
 
 # Engine uses alias as Bezel here for linking
 target_link_libraries(Engine PUBLIC 
@@ -66,17 +67,23 @@ target_link_libraries(Engine PUBLIC
 	OpenGL::GL)
 
 add_library(Bezel::Engine ALIAS Bezel)
-# BZ_DEBUG defined for Debug specific logging (more verbose), BZ_EXPORTS To export functions/classes from dll
-target_compile_definitions(Engine PRIVATE GLFW_INCLUDE_NONE BZ_EXPORTS)
+target_compile_definitions(Engine PUBLIC GLFW_INCLUDE_NONE BZ_DEBUG)
 
-# Compiler-specific flags to allow exporting symbols for Bezel
-if (${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU")
-    # G+
-    target_compile_options(Engine PRIVATE -Wall -Wextra -fPIC -Wno-dev)
-elseif(${CMAKE_CXX_COMPILER_ID} STREQUAL "MSVC")
-    # MSVC
-    target_compile_options(Engine PRIVATE -Wno-dev /EHsc /MDd /W2 /c)
-endif()
+
+# Compiler/Platform specific flags to allow exporting symbols for Bezel
+if (WIN32 OR CYGWIN)
+    # WINDOWS AND CYGWIN COMPILER
+	# BZ_DEBUG defined for Debug specific logging (more verbose), BZ_EXPORTS To export functions/classes from dll
+	target_compile_definitions(Engine PRIVATE BZ_EXPORTS)
+	target_compile_definitions(Engine PUBLIC BZ_PLATFORM_WINDOWS)
+    target_compile_options(Engine PRIVATE /EHsc /MDd /c)
+endif (WIN32 OR CYGWIN)
+if (UNIX)
+    # UNIX (including MAC OS X)
+	target_compile_definitions(Engine PRIVATE BZ_EXPORTS)
+	target_compile_definitions(Engine PUBLIC BZ_PLATFORM_UNIX)
+    target_compile_options(Engine PRIVATE -Wall -Wextra -fPIC)
+endif (UNIX)
 
 # DLL exporting specific steps
 set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER 
@@ -86,3 +93,8 @@ set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER
 install(TARGETS ${PROJECT_NAME}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+
+# C++ 17 required
+set_property(TARGET Engine PROPERTY
+	CXX_STANDARD 17
+	)

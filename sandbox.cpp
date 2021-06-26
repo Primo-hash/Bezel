@@ -20,7 +20,7 @@ public:
 };
 
 /*
-	An example Layer class
+	An example Overlay class
 */
 class ExampleOverlay : public Bezel::Layer {
 public:
