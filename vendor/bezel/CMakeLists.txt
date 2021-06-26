@@ -39,7 +39,7 @@ add_library(Engine SHARED
 
 	# /include
 	"include/Entrypoint.h" "include/Core.h" "include/App.h" "include/Log.h" "include/Window.h"
-	"include/Layer.h" "include/LayerStack.h"
+	"include/Layer.h" "include/LayerStack.h" "include/InputCodes.h" "include/Input.h"
 
 	# /include/events
 	"include/events/Event.h" "include/events/AppEvent.h" "include/events/KeyEvent.h" "include/events/MouseEvent.h"

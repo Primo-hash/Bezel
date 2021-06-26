@@ -6,6 +6,10 @@
 #include "bezel/include/Layer.h"
 #include "bezel/include/Log.h"
 
+// Input handling
+#include "bezel/include/Input.h"
+#include "bezel/include/InputCodes.h"
+
 // GUI layer(s) template(s)
 #include "bezel/GUI/ImGui/ImGuiLayer.h"
 

@@ -1,7 +1,9 @@
 #include "bezel/Precompiled.h"
 #include "bezel/include/App.h"
+#include "bezel/include/Input.h"
 
 #include "glad/glad.h"
+
 
 namespace Bezel {
 

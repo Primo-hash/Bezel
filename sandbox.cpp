@@ -10,11 +10,18 @@ public:
 	ExampleLayer() : Layer("Layer") {}
 
 	void onUpdate() override {
-		BZ_CLIENT_INFO("Layer::Update");
+		if (Bezel::Input::isKeyPressed(BZ_KEY_TAB))
+			BZ_CLIENT_TRACE("Tab key is pressed (poll)!");
 	}
 
 	void onEvent(Bezel::Event& event) override {
-		BZ_CLIENT_TRACE("{0}", event);
+		if (event.GetEventType() == Bezel::EventType::KeyPressed) {
+			Bezel::KeyPressedEvent& e = (Bezel::KeyPressedEvent&)event;
+			if (e.GetKeyCode() == BZ_KEY_TAB) {
+				BZ_CLIENT_TRACE("Tab key is pressed (event)!");
+			}
+			BZ_CLIENT_TRACE("{0}", (char)e.GetKeyCode());
+		}
 	}
 
 };
