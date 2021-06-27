@@ -25,7 +25,7 @@ target_include_directories(${PROJECT_NAME} INTERFACE
 target_precompile_headers(${PROJECT_NAME} INTERFACE "Precompiled.h")
 
 # Library files
-add_library(Engine SHARED
+add_library(Engine STATIC
 	# I am aware of the usage of GLOB to define directories
 	# However it is strongly discouraged because the build system won't know
 	# when to ask CMake to regenerate.

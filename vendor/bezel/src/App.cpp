@@ -83,6 +83,7 @@ namespace Bezel {
 
 	void App::popLayer(Layer* layer) {
 		m_LayerStack.popLayer(layer);
+		layer->onDetach();
 	}
 
 	void App::pushOverlay(Layer* overlay) {
@@ -92,6 +93,7 @@ namespace Bezel {
 
 	void App::popOverlay(Layer* overlay) {
 		m_LayerStack.popOverlay(overlay);
+		overlay->onDetach();
 	}
 
 }
