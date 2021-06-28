@@ -9,7 +9,7 @@
       ],
       "buildRoot": "${projectDir}\\out\\build\\${name}",
       "installRoot": "${projectDir}\\out\\install\\${name}",
-      "cmakeCommandArgs": "",
+      "cmakeCommandArgs": "-Wno-dev",
       "buildCommandArgs": "-v",
       "ctestCommandArgs": ""
     }

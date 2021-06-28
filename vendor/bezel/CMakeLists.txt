@@ -40,6 +40,9 @@ add_library(Engine STATIC
 
 	# /include/events
 	"include/events/Event.h" "include/events/AppEvent.h" "include/events/KeyEvent.h" "include/events/MouseEvent.h"
+
+	# /include/renderer
+	"include/renderer/RenderContext.h"
 	
 	# /src
 	"src/App.cpp" "src/Log.cpp" "src/Layer.cpp" "src/LayerStack.cpp"
@@ -47,6 +50,9 @@ add_library(Engine STATIC
 	# /platform
 	"platform/desktop/DesktopWindow.cpp" "platform/desktop/DesktopWindow.h" 
 	"platform/desktop/DesktopInput.cpp" "platform/desktop/DesktopInput.h"
+
+	# /platform/renderAPI/OpenGL
+	"platform/desktop/renderAPI/OpenGL/OpenGLContext.cpp" "platform/desktop/renderAPI/OpenGL/OpenGLContext.h"
 
 	# ./
 	"Bezel.h"
@@ -64,6 +70,9 @@ target_link_libraries(Engine PUBLIC
 	OpenGL::GL)
 
 add_library(Bezel::Engine ALIAS Bezel)
+# Engine Options: 
+#	- BZ_DEBUG              // Debugging mode
+#   - BZ_DYNAMIC_LINK		// Required if this library is compiled as 'SHARED'
 target_compile_definitions(Engine PUBLIC GLFW_INCLUDE_NONE BZ_DEBUG)
 
 

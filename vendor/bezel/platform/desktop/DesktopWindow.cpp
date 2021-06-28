@@ -5,7 +5,8 @@
 #include "bezel/include/events/MouseEvent.h"
 #include "bezel/include/events/KeyEvent.h"
 
-#include <glad/glad.h>
+// Rendering context
+#include "renderAPI/OpenGL/OpenGLContext.h"
 
 namespace Bezel {
 
@@ -68,10 +69,10 @@ namespace Bezel {
 		}
 
 		m_Window = glfwCreateWindow((int)specs.width, (int)specs.height, m_Data.title.c_str(), nullptr, nullptr);
-		glfwMakeContextCurrent(m_Window);			// Window context on current running program or thread
-		// Init GLAD on the current process
-		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-		BZ_CORE_ASSERT(status, "GLAD failed to initialize!")
+		// Set OpenGL to render the context
+		m_Context = new OpenGLContext(m_Window);
+		m_Context->init();
+
 		glfwSetWindowUserPointer(m_Window, &m_Data);	
 		setVSync(true);								// Vsync on by default
 	
@@ -201,7 +202,7 @@ namespace Bezel {
 	void DesktopWindow::onUpdate()
 	{
 		glfwPollEvents();
-		glfwSwapBuffers(m_Window);
+		m_Context->swapBuffers();
 	}
 
 	void DesktopWindow::setVSync(bool enabled)

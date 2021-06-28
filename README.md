@@ -6,10 +6,14 @@ Author: Abdulhadi Al-Sayed
 
 ## Description
 The repository includes a sandbox application for testing with an example CMake setup
-for cross platform adoption. The Bezel engine exists in the top vendor directory as a dll,
+for cross platform adoption. The Bezel engine exists in the top vendor directory as a static (or shared with a few modifications),
 and runs its own dependencies from another vendor directory.
 The engine logic is made with STL headers and should be able to implement multiple libraries with the
 same purpose but optimized for different platforms.
+
+## Major changes
+* Uses CMake (Tested on Windows/Unix)
+* Cross platform compatible (Hazel can but doesn't)
 
 ## Requirements  
 #### CMake  

@@ -3,23 +3,31 @@
 
 /*
 *	Eksporterer bibliotek basert på platform for klasser som bruker BEZEL_API,
-*   DLL blir importert hvis ikke allerede importert.
+*   DLL blir importert hvis bibliotek er kompilert dynamisk, ellers definert som tom.
 */
 
-// Define EXPORTED for any platform
+// Define EXPORTED for any platform if library compiled dynamically
 #if defined BZ_PLATFORM_WINDOWS
-	#ifdef BZ_EXPORTS
-		#define EXPORTED  __declspec( dllexport )
-	#else
-		#define EXPORTED  __declspec( dllimport )
-	#endif
-#elif defined BZ_PLATFORM_UNIX
-	#ifdef BZ_EXPORTS
-		#define EXPORTED __attribute__ ((visibility ("default")))
-		#define NOT_EXPORTED  __attribute__ ((visibility ("hidden")))
+	#ifdef BZ_DYNAMIC_LINK
+		#ifdef BZ_EXPORTS
+			#define EXPORTED  __declspec( dllexport )
+		#else
+			#define EXPORTED  __declspec( dllimport )
+		#endif
 	#else
 		#define EXPORTED
-		#define NOT_EXPORTED
+	#endif
+#elif defined BZ_PLATFORM_UNIX
+	#ifdef BZ_DYNAMIC_LINK
+		#ifdef BZ_EXPORTS
+			#define EXPORTED __attribute__ ((visibility ("default")))
+			#define NOT_EXPORTED  __attribute__ ((visibility ("hidden")))
+		#else
+			#define EXPORTED
+			#define NOT_EXPORTED
+		#endif
+	#else
+		#define EXPORTED
 	#endif
 #else
 	#error The program might be running on an unsupported platform, supported platforms(WINDOWS, UNIX)
