@@ -13,7 +13,7 @@ same purpose but optimized for different platforms.
 
 ## Major changes
 * Uses CMake (Tested on Windows/Unix)
-* Cross platform compatible (Hazel can but doesn't)
+* Cross platform compatible
 
 ## Requirements  
 #### CMake  

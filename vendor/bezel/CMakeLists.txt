@@ -28,8 +28,8 @@ target_precompile_headers(${PROJECT_NAME} INTERFACE "Precompiled.h")
 add_library(Engine STATIC
 	# I am aware of the usage of GLOB to define directories
 	# However it is strongly discouraged because the build system won't know
-	# when to ask CMake to regenerate.
-	# That is why I have chosen to list manually
+	# when to ask CMake to regenerate in some cases.
+	# That is why I have chosen to list manually.
 
 	# /GUI/ImGui
 	"GUI/ImGui/ImGuiLayer.cpp" "GUI/ImGui/ImGuiLayer.h" "GUI/ImGui/ImGuiBuild.h"
@@ -42,17 +42,21 @@ add_library(Engine STATIC
 	"include/events/Event.h" "include/events/AppEvent.h" "include/events/KeyEvent.h" "include/events/MouseEvent.h"
 
 	# /include/renderer
-	"include/renderer/RenderContext.h"
+	"include/renderer/Renderer.h" "include/renderer/RenderContext.h" "include/renderer/Shader.h" "include/renderer/Buffer.h"
+	"include/renderer/VertexArray.h"
 	
 	# /src
-	"src/App.cpp" "src/Log.cpp" "src/Layer.cpp" "src/LayerStack.cpp"
+	"src/App.cpp" "src/Log.cpp" "src/Layer.cpp" "src/LayerStack.cpp" "src/Shader.cpp" "src/Buffer.cpp" "src/Renderer.cpp"
+	"src/VertexArray.cpp"
 	
 	# /platform
 	"platform/desktop/DesktopWindow.cpp" "platform/desktop/DesktopWindow.h" 
 	"platform/desktop/DesktopInput.cpp" "platform/desktop/DesktopInput.h"
 
 	# /platform/renderAPI/OpenGL
-	"platform/desktop/renderAPI/OpenGL/OpenGLContext.cpp" "platform/desktop/renderAPI/OpenGL/OpenGLContext.h"
+	"platform/renderAPI/OpenGL/OpenGLContext.cpp" "platform/renderAPI/OpenGL/OpenGLContext.h"
+	"platform/renderAPI/OpenGL/OpenGLBuffer.cpp" "platform/renderAPI/OpenGL/OpenGLBuffer.h"
+	"platform/renderAPI/OpenGL/OpenGLVertexArray.cpp" "platform/renderAPI/OpenGL/OpenGLVertexArray.h"
 
 	# ./
 	"Bezel.h"

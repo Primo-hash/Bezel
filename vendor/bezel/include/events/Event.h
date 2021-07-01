@@ -20,6 +20,8 @@ namespace Bezel {
 	/*
 		Definert event kategorier for filtrering av kategorier gitt tillatelse basert på instans
 	*/
+	#pragma warning(push)	// Removes a warning that is a best practices suggestion which doesn't work on this project.
+	#pragma warning(disable : 26812)
 	enum EventCategory
 	{
 		None = 0,
@@ -29,7 +31,7 @@ namespace Bezel {
 		EventCategoryMouse = BIT(3),
 		EventCategoryMouseButton = BIT(4)
 	};
-
+	#pragma warning(pop)
 	/*
 		Event type og kategori makro funksjonsdefinisjon
 	*/

@@ -22,7 +22,8 @@ public:
 
 	virtual void onImGuiRender() override
 	{
-		// Makes a simple window in the GUI
+		// Makes a simple window in the GUI to test
+		ImGui::SetNextWindowSize(ImVec2(200, 200), ImGuiCond_FirstUseEver);	// Sets an initial window size for first time this window is rendered.
 		ImGui::Begin("Yo");
 		ImGui::Text("yo");
 		ImGui::End();

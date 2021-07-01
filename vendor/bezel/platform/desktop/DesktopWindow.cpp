@@ -6,7 +6,7 @@
 #include "bezel/include/events/KeyEvent.h"
 
 // Rendering context
-#include "renderAPI/OpenGL/OpenGLContext.h"
+#include "bezel/platform/renderAPI/OpenGL/OpenGLContext.h"
 
 namespace Bezel {
 

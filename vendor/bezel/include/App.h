@@ -3,22 +3,30 @@
 
 #include "Window.h"
 #include "bezel/include/LayerStack.h"
+
 #include "events/Event.h"
 #include "events/AppEvent.h"
 
 #include "bezel/GUI/ImGui/ImGuiLayer.h"
+
+#include "renderer/Shader.h"
+#include "renderer/Buffer.h"
+#include "renderer/VertexArray.h"
 
 namespace Bezel {
 
 	class EXPORTED App {
 	private:
 		static App* s_Instance;		// Application instance called by client
+		bool m_Running = true;		// Current application instance status
 
 		std::unique_ptr<Window> m_Window;
 		LayerStack m_LayerStack;
 		
+		std::shared_ptr<Shader> m_Shader;
+		std::shared_ptr<VertexArray> m_VertexArray;
+
 		ImGuiLayer* m_ImGuiLayer;
-		bool m_Running = true;
 
 		bool onWindowClose(WindowCloseEvent& e);
 	public:
