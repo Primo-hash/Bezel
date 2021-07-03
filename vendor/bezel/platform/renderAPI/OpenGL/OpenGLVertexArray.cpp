@@ -2,6 +2,7 @@
 #include "OpenGLVertexArray.h"
 
 #include <glad/glad.h>
+#include <cstdint>
 
 namespace Bezel {
 
@@ -23,7 +24,7 @@ namespace Bezel {
 	}
 
 	OpenGLVertexArray::OpenGLVertexArray() {
-		glCreateVertexArrays(1, &m_RendererID);
+		BZ_OPENGL_DEFINE_VERTEX_ARRAYS(1, &m_RendererID);
 	}
 
 	OpenGLVertexArray::~OpenGLVertexArray() {
@@ -54,7 +55,7 @@ namespace Bezel {
 				shaderDataTypeToOpenGLBaseType(element.type),
 				element.normalized ? GL_TRUE : GL_FALSE,
 				layout.getStride(),
-				reinterpret_cast<const void*>(element.offset));
+				(const void*)(std::uintptr_t)element.offset);	// casting to uintptr_t first avoids int to void* size discrepancy
 			index++;
 		}
 

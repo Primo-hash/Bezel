@@ -8,8 +8,8 @@ namespace Bezel {
 
 	VertexArray* VertexArray::create() {
 		switch (Renderer::getAPI()) {
-		case RenderAPI::None:    BZ_CORE_ASSERT(false, "RenderAPI::None is currently not supported!"); return nullptr;
-		case RenderAPI::OpenGL:  return new OpenGLVertexArray();
+		case RenderAPI::API::None:    BZ_CORE_ASSERT(false, "RenderAPI::None is currently not supported!"); return nullptr;
+		case RenderAPI::API::OpenGL:  return new OpenGLVertexArray();
 		default: BZ_CORE_ASSERT(false, "Unknown RenderAPI!"); return nullptr;
 		}
 	}

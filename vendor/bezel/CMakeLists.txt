@@ -43,11 +43,11 @@ add_library(Engine STATIC
 
 	# /include/renderer
 	"include/renderer/Renderer.h" "include/renderer/RenderContext.h" "include/renderer/Shader.h" "include/renderer/Buffer.h"
-	"include/renderer/VertexArray.h"
+	"include/renderer/VertexArray.h" "include/renderer/RenderCommand.h" "include/renderer/RenderAPI.h"
 	
 	# /src
 	"src/App.cpp" "src/Log.cpp" "src/Layer.cpp" "src/LayerStack.cpp" "src/Shader.cpp" "src/Buffer.cpp" "src/Renderer.cpp"
-	"src/VertexArray.cpp"
+	"src/VertexArray.cpp" "src/RenderAPI.cpp" "src/RenderCommand.cpp"
 	
 	# /platform
 	"platform/desktop/DesktopWindow.cpp" "platform/desktop/DesktopWindow.h" 
@@ -57,6 +57,7 @@ add_library(Engine STATIC
 	"platform/renderAPI/OpenGL/OpenGLContext.cpp" "platform/renderAPI/OpenGL/OpenGLContext.h"
 	"platform/renderAPI/OpenGL/OpenGLBuffer.cpp" "platform/renderAPI/OpenGL/OpenGLBuffer.h"
 	"platform/renderAPI/OpenGL/OpenGLVertexArray.cpp" "platform/renderAPI/OpenGL/OpenGLVertexArray.h"
+	"platform/renderAPI/OpenGL/OpenGLRenderAPI.cpp" "platform/renderAPI/OpenGL/OpenGLRenderAPI.h"
 
 	# ./
 	"Bezel.h"

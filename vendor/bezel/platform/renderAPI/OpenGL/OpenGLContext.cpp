@@ -10,7 +10,7 @@ namespace Bezel {
 	OpenGLContext::OpenGLContext(GLFWwindow* windowHandle) : m_WindowHandle(windowHandle) {
 		BZ_CORE_ASSERT(windowHandle, "Window handle is null!")
 	}
-
+	
 	void OpenGLContext::init() {
 		glfwMakeContextCurrent(m_WindowHandle);
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
@@ -25,5 +25,4 @@ namespace Bezel {
 	void OpenGLContext::swapBuffers() {
 		glfwSwapBuffers(m_WindowHandle);
 	}
-
 }

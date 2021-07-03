@@ -22,6 +22,7 @@ namespace Bezel {
 		// Allocate more space if needed
 		m_Layers.emplace(m_Layers.begin() + m_LayerInsertIndex, layer);
 		m_LayerInsertIndex++;
+		layer->onAttach();
 	}
 
 	/*
@@ -31,6 +32,7 @@ namespace Bezel {
 		// Insert Layer at the beginning of the vector
 		// Allocate more space if needed
 		m_Layers.emplace_back(overlay);
+		overlay->onAttach();
 	}
 
 	/*
@@ -38,8 +40,9 @@ namespace Bezel {
 	*/
 	void LayerStack::popLayer(Layer* layer)
 	{
-		auto it = std::find(m_Layers.begin(), m_Layers.end(), layer);
+		auto it = std::find(m_Layers.begin(), m_Layers.begin() + m_LayerInsertIndex, layer);
 		if (it != m_Layers.end()) {
+			layer->onDetach();
 			m_Layers.erase(it);
 			m_LayerInsertIndex--;		// Moves starting pointer one element backward
 		}
@@ -50,8 +53,9 @@ namespace Bezel {
 	*/
 	void LayerStack::popOverlay(Layer* overlay)
 	{
-		auto it = std::find(m_Layers.begin(), m_Layers.end(), overlay);
+		auto it = std::find(m_Layers.begin() + m_LayerInsertIndex, m_Layers.end(), overlay);
 		if (it != m_Layers.end()) {
+			overlay->onDetach();
 			m_Layers.erase(it);
 		}
 	}

@@ -1,4 +1,5 @@
 #pragma once
+#include "RenderCommand.h"
 
 /*
 	Rendering is built around the concept that the developer can switch between
@@ -9,15 +10,15 @@
 
 namespace Bezel {
 
-	enum class RenderAPI {
-		None = 0, OpenGL = 1, DirectX12 = 2, Vulkan = 3, Metal = 4
-	};
-
 	class Renderer {
-	private:
-		static RenderAPI s_RenderAPI;
 	public:
-		inline static RenderAPI getAPI() { return s_RenderAPI; }
+		static void beginScene();
+		static void endScene();
+
+		static void submit(const std::shared_ptr<VertexArray>& vertexArray);
+
+		inline static RenderAPI::API getAPI() { return RenderAPI::getAPI(); }
+
 	};
 
 }

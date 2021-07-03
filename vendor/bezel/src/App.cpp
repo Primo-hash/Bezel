@@ -2,7 +2,7 @@
 #include "bezel/include/App.h"
 #include "bezel/include/Input.h"
 
-#include "glad/glad.h"
+#include "bezel/include/renderer/Renderer.h"
 
 
 namespace Bezel {
@@ -102,14 +102,17 @@ namespace Bezel {
 		// Simple window test
 		while (m_Running) {
 			// Draw simple background
-			glClearColor(0.5546875, 0.5546875, 0.5546875, 1);
-			glClear(GL_COLOR_BUFFER_BIT);
+			RenderCommand::setClearColor({ 0.5546875, 0.5546875, 0.5546875, 1 });
+			RenderCommand::clear();
 
-			// For later abstraction
+			// Generate a scene
+			Renderer::beginScene();
+			
+			// Submit our triangle
 			m_Shader->bind();
-			m_VertexArray->bind();
-			glDrawElements(GL_TRIANGLES, m_VertexArray->getIndexBuffer()->getCount(), GL_UNSIGNED_INT, nullptr);
+			Renderer::submit(m_VertexArray);
 
+			Renderer::endScene();
 
 			// Event handling by layer priority
 			for (Layer* layer : m_LayerStack) {
@@ -145,22 +148,18 @@ namespace Bezel {
 	
 	void App::pushLayer(Layer* layer) {
 		m_LayerStack.pushLayer(layer);
-		layer->onAttach();
 	}
 
 	void App::popLayer(Layer* layer) {
 		m_LayerStack.popLayer(layer);
-		layer->onDetach();
 	}
 
 	void App::pushOverlay(Layer* overlay) {
 		m_LayerStack.pushOverlay(overlay);
-		overlay->onAttach();
 	}
 
 	void App::popOverlay(Layer* overlay) {
 		m_LayerStack.popOverlay(overlay);
-		overlay->onDetach();
 	}
 
 }
