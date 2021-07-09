@@ -6,6 +6,7 @@
 */
 
 #include "Core.h"
+#include "bezel/core/Timestep.h"
 #include "events/Event.h"
 
 namespace Bezel {
@@ -24,7 +25,7 @@ namespace Bezel {
 
 		virtual void onAttach() {}
 		virtual void onDetach() {}
-		virtual void onUpdate() {}
+		virtual void onUpdate(Timestep ts) {}
 		virtual void onImGuiRender() {}
 		virtual void onEvent(Event& event) {}
 

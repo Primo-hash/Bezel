@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <glm/glm.hpp>
 
 namespace Bezel {
 
@@ -13,6 +14,8 @@ namespace Bezel {
 
 		void bind() const;
 		void unbind() const;
+
+		void addUniformMat4(const std::string& name, const glm::mat4& matrix);
 	};
 
 }

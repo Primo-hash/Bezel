@@ -7,25 +7,24 @@
 #include "events/Event.h"
 #include "events/AppEvent.h"
 
-#include "bezel/GUI/ImGui/ImGuiLayer.h"
+#include "bezel/core/Timestep.h"
 
-#include "renderer/Shader.h"
-#include "renderer/Buffer.h"
-#include "renderer/VertexArray.h"
+#include "bezel/GUI/ImGui/ImGuiLayer.h"
 
 namespace Bezel {
 
 	class EXPORTED App {
 	private:
-		static App* s_Instance;		// Application instance called by client
-		bool m_Running = true;		// Current application instance status
+		static App* s_Instance;			// Application instance called by client
+		bool m_Running = true;			// Current application instance status
+		float m_LastFrameTime = 0.0f;	// Time of last frame for this app
 
 		std::unique_ptr<Window> m_Window;
+		
+		// General layer/overlay stack
 		LayerStack m_LayerStack;
 		
-		std::shared_ptr<Shader> m_Shader;
-		std::shared_ptr<VertexArray> m_VertexArray;
-
+		// GUI
 		ImGuiLayer* m_ImGuiLayer;
 
 		bool onWindowClose(WindowCloseEvent& e);

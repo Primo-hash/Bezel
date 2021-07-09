@@ -26,10 +26,13 @@ target_precompile_headers(${PROJECT_NAME} INTERFACE "Precompiled.h")
 
 # Library files
 add_library(Engine STATIC
-	# I am aware of the usage of GLOB to define directories
+	# I am aware of the usage of GLOB to add files by regex
 	# However it is strongly discouraged because the build system won't know
 	# when to ask CMake to regenerate in some cases.
 	# That is why I have chosen to list manually.
+
+	# /core
+	"core/Timestep.h"
 
 	# /GUI/ImGui
 	"GUI/ImGui/ImGuiLayer.cpp" "GUI/ImGui/ImGuiLayer.h" "GUI/ImGui/ImGuiBuild.h"
@@ -44,10 +47,11 @@ add_library(Engine STATIC
 	# /include/renderer
 	"include/renderer/Renderer.h" "include/renderer/RenderContext.h" "include/renderer/Shader.h" "include/renderer/Buffer.h"
 	"include/renderer/VertexArray.h" "include/renderer/RenderCommand.h" "include/renderer/RenderAPI.h"
-	
+	"include/renderer/OrthographicCamera.h"
+
 	# /src
 	"src/App.cpp" "src/Log.cpp" "src/Layer.cpp" "src/LayerStack.cpp" "src/Shader.cpp" "src/Buffer.cpp" "src/Renderer.cpp"
-	"src/VertexArray.cpp" "src/RenderAPI.cpp" "src/RenderCommand.cpp"
+	"src/VertexArray.cpp" "src/RenderAPI.cpp" "src/RenderCommand.cpp" "src/OrthographicCamera.cpp"
 	
 	# /platform
 	"platform/desktop/DesktopWindow.cpp" "platform/desktop/DesktopWindow.h" 
