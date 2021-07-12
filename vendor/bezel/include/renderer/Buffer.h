@@ -107,21 +107,7 @@ namespace Bezel {
 	*/
 	class VertexBuffer {
 	public:
-		VertexBuffer() {
-			if (getOpenGLVersion() >= 450) {	// Checks to use modern glCreate (> v4.5) or old glGen
-				// Uses glCreate*
-				#define BZ_OPENGL_DEFINE_BUFFERS(...)::glCreateBuffers(__VA_ARGS__)
-				// Uses glCreate*
-				#define BZ_OPENGL_DEFINE_VERTEX_ARRAYS(...)::glCreateVertexArrays(__VA_ARGS__)
-			}
-			else {
-				// Uses glGen*
-				#define BZ_OPENGL_DEFINE_BUFFERS(...)::glGenBuffers(__VA_ARGS__)
-				// Uses glGen*
-				#define BZ_OPENGL_DEFINE_VERTEX_ARRAYS(...)::glGenVertexArrays(__VA_ARGS__)
-			}
-		}
-
+		VertexBuffer() {}
 		virtual ~VertexBuffer() {}
 
 		virtual void bind() const = 0;
@@ -131,7 +117,6 @@ namespace Bezel {
 		virtual void setLayout(const BufferLayout& layout) = 0;
 
 		static VertexBuffer* create(float* vertices, uint32_t size);
-		static unsigned int getOpenGLVersion();
 	};
 
 	/*

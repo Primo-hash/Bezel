@@ -1,6 +1,8 @@
 #include "bezel/Precompiled.h"
 #include "OpenGLVertexArray.h"
 
+#include "OpenGLFuncVersion.h"
+
 #include <glad/glad.h>
 #include <cstdint>
 
@@ -24,6 +26,14 @@ namespace Bezel {
 	}
 
 	OpenGLVertexArray::OpenGLVertexArray() {
+		if (OpenGLFuncVersion::getOpenGLVersion() >= 450) {	// Checks to use modern glCreate (> v4.5) or old glGen
+			// Uses glCreate*
+			#define BZ_OPENGL_DEFINE_VERTEX_ARRAYS(...)::glCreateVertexArrays(__VA_ARGS__)
+		}
+		else {
+			// Uses glGen*
+			#define BZ_OPENGL_DEFINE_VERTEX_ARRAYS(...)::glGenVertexArrays(__VA_ARGS__)
+		}
 		BZ_OPENGL_DEFINE_VERTEX_ARRAYS(1, &m_RendererID);
 	}
 
@@ -39,34 +49,47 @@ namespace Bezel {
 		glBindVertexArray(0);
 	}
 
-	void OpenGLVertexArray::addVertexBuffer(const std::shared_ptr<VertexBuffer>& vertexBuffer) {
+	void OpenGLVertexArray::addVertexBuffer(const Ref<VertexBuffer>& vertexBuffer) {
 		// Checks that addVertexBuffer is not being called before setLayout
 		BZ_CORE_ASSERT(vertexBuffer->getLayout().getElements().size(), "Vertex Buffer has no layout!");
 
 		glBindVertexArray(m_RendererID);
 		vertexBuffer->bind();
 
-		uint32_t index = 0;
 		const auto& layout = vertexBuffer->getLayout();	// Get premade layout
 		for (const auto& element : layout) {	// Send layout specs for every ShaderDataType to GL 
-			glEnableVertexAttribArray(index);
-			glVertexAttribPointer(index,
+			glEnableVertexAttribArray(m_VertexBufferIndex);
+			glVertexAttribPointer(m_VertexBufferIndex,
 				element.GetComponentCount(),
 				shaderDataTypeToOpenGLBaseType(element.type),
 				element.normalized ? GL_TRUE : GL_FALSE,
 				layout.getStride(),
-				(const void*)(std::uintptr_t)element.offset);	// casting to uintptr_t first avoids int to void* size discrepancy
-			index++;
+				(const void*)(std::intptr_t)element.offset);	// casting to uintptr_t first avoids int to void* size discrepancy
+			m_VertexBufferIndex++;	// Increase index created to avoid buffers stacking.
 		}
 
-		m_VertexBuffers.push_back(vertexBuffer);	// Add to current collection of Buffers
+		m_VertexBuffers.push_back(vertexBuffer);					// Add to current collection of Buffers
 	}
 
-	void OpenGLVertexArray::setIndexBuffer(const std::shared_ptr<IndexBuffer>& indexBuffer) {
+	void OpenGLVertexArray::setIndexBuffer(const Ref<IndexBuffer>& indexBuffer) {
 		// Bind Indexes for current Array
 		glBindVertexArray(m_RendererID);
 		indexBuffer->bind();
 
 		m_IndexBuffer = indexBuffer;
+	}
+
+	/*
+		Defines suitable OpenGL vertex array creation functions based on version
+	*/
+	void OpenGLVertexArray::selectVertexArrayFunc() {
+		if (OpenGLFuncVersion::getOpenGLVersion() >= 450) {	// Checks to use modern glCreate (> v4.5) or old glGen
+			// Uses glCreate*
+			#define BZ_OPENGL_DEFINE_VERTEX_ARRAYS(...)::glCreateVertexArrays(__VA_ARGS__)
+		}
+		else {
+			// Uses glGen*
+			#define BZ_OPENGL_DEFINE_VERTEX_ARRAYS(...)::glGenVertexArrays(__VA_ARGS__)
+		}
 	}
 }

@@ -1,5 +1,6 @@
 #include "bezel/Precompiled.h"
 #include "bezel/include/App.h"
+#include "bezel/include/renderer/Renderer.h"
 #include "bezel/include/Input.h"
 
 //#include "bezel/include/renderer/Renderer.h"
@@ -19,11 +20,12 @@ namespace Bezel {
 		// Default set of keyboard, mouse and application events running by default
 		m_Window->setEventCallback(BZ_BIND_EVENT_FN(App::onEvent));
 
+		// Call init of abstracted renderer
+		Renderer::init();
+
 		// Native GUI instance overlay for the application
 		m_ImGuiLayer = new ImGuiLayer();
 		pushOverlay(m_ImGuiLayer);
-
-		
 	}
 
 	Bezel::App::~App() {

@@ -1,5 +1,6 @@
 #pragma once
 #include <signal.h>
+#include <memory>
 
 /*
 *	Eksporterer bibliotek basert på platform for klasser som bruker BEZEL_API,
@@ -73,3 +74,13 @@
 	For binding custom Bezel events to GUI or renderer functions
 */
 #define BZ_BIND_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1)
+
+namespace Bezel {
+
+	template<typename T>
+	using Scope = std::unique_ptr<T>;
+
+	template<typename T>
+	using Ref = std::shared_ptr<T>;
+
+}

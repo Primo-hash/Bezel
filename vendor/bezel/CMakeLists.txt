@@ -15,6 +15,7 @@ add_subdirectory(vendor/glew-cmake-2.1.0)
 add_subdirectory(vendor/glm-0.9.9.8)
 add_subdirectory(vendor/imgui)
 add_subdirectory(vendor/spdlog)
+add_subdirectory(vendor/stb)
 
 # Scope
 add_library(${PROJECT_NAME} INTERFACE)
@@ -47,11 +48,11 @@ add_library(Engine STATIC
 	# /include/renderer
 	"include/renderer/Renderer.h" "include/renderer/RenderContext.h" "include/renderer/Shader.h" "include/renderer/Buffer.h"
 	"include/renderer/VertexArray.h" "include/renderer/RenderCommand.h" "include/renderer/RenderAPI.h"
-	"include/renderer/OrthographicCamera.h"
+	"include/renderer/OrthographicCamera.h" "include/renderer/Texture.h"
 
 	# /src
 	"src/App.cpp" "src/Log.cpp" "src/Layer.cpp" "src/LayerStack.cpp" "src/Shader.cpp" "src/Buffer.cpp" "src/Renderer.cpp"
-	"src/VertexArray.cpp" "src/RenderAPI.cpp" "src/RenderCommand.cpp" "src/OrthographicCamera.cpp"
+	"src/VertexArray.cpp" "src/RenderAPI.cpp" "src/RenderCommand.cpp" "src/OrthographicCamera.cpp"  "src/Texture.cpp"
 	
 	# /platform
 	"platform/desktop/DesktopWindow.cpp" "platform/desktop/DesktopWindow.h" 
@@ -62,6 +63,9 @@ add_library(Engine STATIC
 	"platform/renderAPI/OpenGL/OpenGLBuffer.cpp" "platform/renderAPI/OpenGL/OpenGLBuffer.h"
 	"platform/renderAPI/OpenGL/OpenGLVertexArray.cpp" "platform/renderAPI/OpenGL/OpenGLVertexArray.h"
 	"platform/renderAPI/OpenGL/OpenGLRenderAPI.cpp" "platform/renderAPI/OpenGL/OpenGLRenderAPI.h"
+	"platform/renderAPI/OpenGL/OpenGLShader.cpp" "platform/renderAPI/OpenGL/OpenGLShader.h"
+	"platform/renderAPI/OpenGL/OpenGLTexture.cpp" "platform/renderAPI/OpenGL/OpenGLTexture.h"
+	"platform/renderAPI/OpenGL/OpenGLFuncVersion.h" "platform/renderAPI/OpenGL/OpenGLFuncVersion.cpp"
 
 	# ./
 	"Bezel.h"
@@ -76,6 +80,7 @@ target_link_libraries(Engine PUBLIC
 	glm
 	imgui
 	spdlog
+	stb
 	OpenGL::GL)
 
 add_library(Bezel::Engine ALIAS Bezel)

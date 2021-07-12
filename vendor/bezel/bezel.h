@@ -21,6 +21,7 @@
 
 #include "bezel/include/renderer/Buffer.h"
 #include "bezel/include/renderer/Shader.h"
+#include "bezel/include/renderer/Texture.h"
 #include "bezel/include/renderer/VertexArray.h"
 
 #include "bezel/include/renderer/OrthographicCamera.h"

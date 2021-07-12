@@ -1,0 +1,58 @@
+#include "bezel/Precompiled.h"
+#include "OpenGLTexture.h"
+
+#include "OpenGLFuncVersion.h"
+
+#include "bezel/vendor/stb/stb_image.h"	// Single header include
+
+#include <glad/glad.h>
+
+namespace Bezel {
+
+	OpenGLTexture2D::OpenGLTexture2D(const std::string& path) : m_Path(path) {
+		int width, height, channels;
+		stbi_set_flip_vertically_on_load(1);
+		stbi_uc* data = stbi_load(path.c_str(), &width, &height, &channels, 0);
+		BZ_CORE_ASSERT(data, "Failed to load image!");
+		m_Width = width;
+		m_Height = height;
+		
+		// OpenGL's internal interpretation of formats
+		GLenum internalFormat = 0, dataFormat = 0;
+		if (channels == 4) {		// Image uses RGBA
+			internalFormat = GL_RGBA8;
+			dataFormat = GL_RGBA;
+		}
+		else if (channels == 3) {	// Image uses RGB
+			internalFormat = GL_RGB8;
+			dataFormat = GL_RGB;
+		}
+		
+		BZ_CORE_ASSERT(internalFormat && dataFormat, "Format unsupported!");
+
+
+		if (OpenGLFuncVersion::getOpenGLVersion() >= 450) {	// Checks to use modern glCreate (> v4.5) or old glGen
+			glCreateTextures(GL_TEXTURE_2D, 1, &m_RendererID);
+		}
+		else {
+			glGenTextures(1, &m_RendererID);
+		}
+
+		glTextureStorage2D(m_RendererID, 1, internalFormat, m_Width, m_Height);
+
+		glTextureParameteri(m_RendererID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTextureParameteri(m_RendererID, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+		glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, dataFormat, GL_UNSIGNED_BYTE, data);
+
+		stbi_image_free(data);
+	}
+
+	OpenGLTexture2D::~OpenGLTexture2D() {
+		glDeleteTextures(1, &m_RendererID);
+	}
+
+	void OpenGLTexture2D::bind(uint32_t slot) const{
+		glBindTextureUnit(slot, m_RendererID);
+	}
+}

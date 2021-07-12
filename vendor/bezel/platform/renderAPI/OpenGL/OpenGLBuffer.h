@@ -33,4 +33,5 @@ namespace Bezel {
 		virtual uint32_t getCount() const { return m_Count; }
 	};
 
+	void selectBufferFunc();
 }

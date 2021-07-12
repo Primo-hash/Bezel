@@ -1,6 +1,5 @@
 #include "bezel/Precompiled.h"
 #include "bezel/include/LayerStack.h"
-
 namespace Bezel {
 
 	LayerStack::LayerStack() {
@@ -41,7 +40,7 @@ namespace Bezel {
 	void LayerStack::popLayer(Layer* layer)
 	{
 		auto it = std::find(m_Layers.begin(), m_Layers.begin() + m_LayerInsertIndex, layer);
-		if (it != m_Layers.end()) {
+		if (it != m_Layers.begin() + m_LayerInsertIndex) {
 			layer->onDetach();
 			m_Layers.erase(it);
 			m_LayerInsertIndex--;		// Moves starting pointer one element backward

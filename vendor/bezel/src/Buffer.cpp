@@ -21,12 +21,6 @@ namespace Bezel {
 		}
 	}
 
-	unsigned int VertexBuffer::getOpenGLVersion() {
-		int major = GLVersion.major;
-		int minor = GLVersion.minor;
-		return major * 100 + minor * 10;
-	}
-
 	IndexBuffer* IndexBuffer::create(uint32_t* indices, uint32_t size) {
 		switch (Renderer::getAPI()) {
 		case RenderAPI::API::None:
