@@ -16,9 +16,10 @@ same purpose but optimized for different platforms.
 * Cross platform compatible
 
 ## Requirements  
-#### CMake  
-#### ImGui
-* 'docking' branch on github because the engine implements viewport and docking features (required)
+##### CMake  
+##### ImGui
+* 'docking' branch on imgui github because the engine implements viewport and docking features
+##### OpenGL v4.5 or higher  
 
 # File structure
 

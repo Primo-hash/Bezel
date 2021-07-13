@@ -21,6 +21,11 @@ set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
 
 target_compile_definitions(${PROJECT_NAME} PUBLIC GLEW_STATIC)
 
+if (WIN32 OR CYGWIN)
+    # WINDOWS AND CYGWIN COMPILER
+    target_compile_options(${PROJECT_NAME} PRIVATE /MP)
+endif (WIN32 OR CYGWIN)
+
 # Dependencies
 add_subdirectory(vendor/bezel)
 

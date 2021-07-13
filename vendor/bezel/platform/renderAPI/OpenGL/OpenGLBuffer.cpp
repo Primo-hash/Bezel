@@ -51,8 +51,8 @@ namespace Bezel {
 			#define BZ_OPENGL_DEFINE_BUFFERS(...)::glGenBuffers(__VA_ARGS__)
 		}
 		BZ_OPENGL_DEFINE_BUFFERS(1, &m_RendererID);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32_t), indices, GL_STATIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
+		glBufferData(GL_ARRAY_BUFFER, count * sizeof(uint32_t), indices, GL_STATIC_DRAW);
 	}
 
 	OpenGLIndexBuffer::~OpenGLIndexBuffer() {
@@ -66,6 +66,8 @@ namespace Bezel {
 	void OpenGLIndexBuffer::unbind() const {
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
+
+	// EXPERIMENTAL
 
 	/*
 		Defines suitable OpenGL buffer creation functions based on version

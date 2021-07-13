@@ -64,19 +64,17 @@ namespace Bezel {
 		The EventDispatcher class handles dispatching events of any 'Event' subclass for ease of use.
 	*/
 	class EventDispatcher {
-		template<typename T>
-		using EventFn = std::function<bool(T&)>;
 	private:
 		Event& m_Event;
 	public:
 		EventDispatcher(Event& event) : m_Event(event) {}	// Receive any type of event as a reference
 
 		// Check if current event matches specified filter and dispatch if match.
-		template<typename T>
-		bool Dispatch(EventFn<T> func) {
+		template<typename T, typename F>	// F deduced by compiler
+		bool Dispatch(const F& func) {
 			if (m_Event.getEventType() == T::getStaticType()) {
-				m_Event.m_Handled = func(*(T*)&m_Event);
-				m_Event.handled = func(*(T*)&m_Event);
+				m_Event.m_Handled = func(static_cast<T&>(m_Event));
+				m_Event.handled = func(static_cast<T&>(m_Event));
 				return true;
 			}
 			else {

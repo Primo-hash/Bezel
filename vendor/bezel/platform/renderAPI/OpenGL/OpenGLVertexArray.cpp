@@ -79,6 +79,8 @@ namespace Bezel {
 		m_IndexBuffer = indexBuffer;
 	}
 
+	// EXPERIMENTAL
+
 	/*
 		Defines suitable OpenGL vertex array creation functions based on version
 	*/

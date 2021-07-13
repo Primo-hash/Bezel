@@ -96,7 +96,7 @@ if (WIN32 OR CYGWIN)
 	# BZ_DEBUG defined for Debug specific logging (more verbose), BZ_EXPORTS To export functions/classes from dll
 	target_compile_definitions(Engine PRIVATE BZ_EXPORTS)
 	target_compile_definitions(Engine PUBLIC BZ_PLATFORM_WINDOWS)
-    target_compile_options(Engine PRIVATE /EHsc /MDd /c)
+    target_compile_options(Engine PRIVATE /EHsc /MDd /c /MP)
 endif (WIN32 OR CYGWIN)
 if (UNIX)
     # UNIX (including MAC OS X)
