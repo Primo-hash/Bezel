@@ -21,7 +21,7 @@ same purpose but optimized for different platforms.
 * 'docking' branch on imgui github because the engine implements viewport and docking features
 ##### OpenGL v4.5 or higher  
 
-# File structure
+# File structure of Bezel engine and sandbox app
 
 .  
 +-- include/  
@@ -29,8 +29,11 @@ same purpose but optimized for different platforms.
 +-- src/  
 +-- vendor/  
 | ‎‏‏‎ ‎‏‏‎ +-- bezel/	(The Engine library)  
+| ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- core/  
+| ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- Timestep.h  
 | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- GUI/  
 | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- ImGui/  
+| ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- ImGuiBuild.h  
 | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- ImGuiLayer.cpp  
 | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- ImGuiLayer.h  
 | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- include/  
@@ -39,9 +42,22 @@ same purpose but optimized for different platforms.
 | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- Event.h  
 | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- KeyEvent.h  
 | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- MouseEvent.h    
+| ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- renderer/  
+| ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- Buffer.h  
+| ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- CameraController.h  
+| ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- OrthoGraphicCamera.h  
+| ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- RenderAPI.h    
+| ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- RenderCommand.h  
+| ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- RenderContext.h  
+| ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- Renderer.h  
+| ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- Shader.h    
+| ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- Texture.h  
+| ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- VertexArray.h  
 | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- App.h  
 | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- Core.h  
 | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- Entrypoint.h  
+| ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- Input.h  
+| ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- InputCodes.h  
 | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- Layer.h  
 | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- LayerStack.h  
 | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- Log.h  
@@ -52,11 +68,35 @@ same purpose but optimized for different platforms.
 | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- DesktopInput.h  
 | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- DesktopWindow.cpp  
 | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- DesktopWindow.h  
+| ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- renderAPI/	(OpenGL implementation of superclasses)
+| ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- OpenGLBuffer.cpp  
+| ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- OpenGLBuffer.h  
+| ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- OpenGLContext.cpp  
+| ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- OpenGLContext.h  
+| ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- OpenGLFuncVersion.cpp  
+| ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- OpenGLFuncVersion.h  
+| ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- OpenGLRenderAPI.cpp  
+| ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- OpenGLRenderAPI.h  
+| ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- OpenGLShader.cpp  
+| ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- OpenGLShader.h  
+| ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- OpenGLTexture.cpp  
+| ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- OpenGLTexture.h  
+| ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- OpenGLVertexArray.cpp  
+| ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- OpenGLVertexArray.h  
 | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- src/  
 | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- App.cpp  
+| ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- Buffer.cpp  
+| ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- CameraController.cpp  
 | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- Layer.cpp  
 | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- LayerStack.cpp  
 | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- Log.cpp  
+| ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- OrthographicCamera.cpp  
+| ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- RenderAPI.cpp  
+| ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- RenderCommand.cpp  
+| ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- Renderer.cpp  
+| ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- Shader.cpp  
+| ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- Texture.cpp  
+| ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- VertexArray.cpp  
 | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- vendor/  
 | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- glad/  
 | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- glew/  (To be removed)  
@@ -64,7 +104,12 @@ same purpose but optimized for different platforms.
 | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- glm/  
 | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- imgui/  
 | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- spdlog/  
+| ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- stb/  
 | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- Bezel.h  
 | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- Precompiled.cpp  
 | ‎‏‏‎ ‎‏‏‎ | ‎‏‏‎ ‎‏‏‎ +-- Precompiled.h  
++-- imgui.ini	(GUI config file)
 +-- application.cpp	(currently sandbox.cpp)  
+
+NOTE: General header files are in /include directories, while source files are in /src directories.  
+Platform specific header and source pairs are togæåether in their respective folders.

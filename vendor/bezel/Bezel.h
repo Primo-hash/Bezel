@@ -11,6 +11,7 @@
 // Input handling
 #include "bezel/include/Input.h"
 #include "bezel/include/InputCodes.h"
+#include "bezel/include/renderer/CameraController.h"
 
 // GUI layer(s) template(s)
 #include "bezel/GUI/ImGui/ImGuiLayer.h"

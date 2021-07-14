@@ -11,10 +11,11 @@
 #include <string>
 
 /*
-	An example Layer class that draws a GUI
+	An example Layer class that currently draws a GUI and a demonstration of renderer functionality
 */
 class ExampleLayer : public Bezel::Layer {
 private:
+	// SHADER
 	Bezel::ShaderLibrary m_ShaderLibrary;
 	Bezel::Ref<Bezel::Shader> m_Shader;
 	Bezel::Ref<Bezel::VertexArray> m_VertexArray;
@@ -24,16 +25,12 @@ private:
 
 	Bezel::Ref<Bezel::Texture2D> m_Texture, m_CloudBerryTexture;
 
-	Bezel::OrthographicCamera m_Camera;
-	glm::vec3 m_CameraPosition;
-	float m_CameraMoveSpeed = 5.0f;
-
-	float m_CameraRotation = 0.0f;
-	float m_CameraRotationSpeed = 180.0f;
-
 	glm::vec3 m_SquareColor = { 0.2f, 0.3f, 0.8f };
+
+	// PROJECTION
+	Bezel::OrthographicCameraController m_CameraController;
 public:
-	ExampleLayer() : Layer("Layer"), m_Camera(-3.2f, 3.2f, -1.8f, 1.8f), m_CameraPosition(0.0f) {
+	ExampleLayer() : Layer("Layer"), m_CameraController(1280.0f / 720.0f) {
 		m_VertexArray.reset(Bezel::VertexArray::create());
 
 		float vertices[3 * 7] = {
@@ -169,31 +166,15 @@ public:
 
 	void onUpdate(Bezel::Timestep ts) override {
 
-		if (Bezel::Input::isKeyPressed(BZ_KEY_LEFT))
-			m_CameraPosition.x -= m_CameraMoveSpeed * ts;
-		else if (Bezel::Input::isKeyPressed(BZ_KEY_RIGHT))
-			m_CameraPosition.x += m_CameraMoveSpeed * ts;
-
-		if (Bezel::Input::isKeyPressed(BZ_KEY_UP))
-			m_CameraPosition.y += m_CameraMoveSpeed * ts;
-		else if (Bezel::Input::isKeyPressed(BZ_KEY_DOWN))
-			m_CameraPosition.y -= m_CameraMoveSpeed * ts;
-
-		if (Bezel::Input::isKeyPressed(BZ_KEY_A))
-			m_CameraRotation += m_CameraRotationSpeed * ts;
-		if (Bezel::Input::isKeyPressed(BZ_KEY_D))
-			m_CameraRotation -= m_CameraRotationSpeed * ts;
+		// Camera events and functions to be run in game loop
+		m_CameraController.onUpdate(ts);
 
 		// Draw simple background
 		Bezel::RenderCommand::setClearColor({ 0.5546875, 0.5546875, 0.5546875, 1 });
 		Bezel::RenderCommand::clear();
 
-		// Manual setup of camera position
-		m_Camera.setPosition(m_CameraPosition);
-		m_Camera.setRotation(m_CameraRotation);
-
 		// New scene tied to app camera
-		Bezel::Renderer::beginScene(m_Camera);
+		Bezel::Renderer::beginScene(m_CameraController.getCamera());
 
 
 		// Submit our triangle with how to draw then what to draw
@@ -235,9 +216,12 @@ public:
 		ImGui::End();
 	}
 
-
-	void onEvent(Bezel::Event& event) override {
-		// Logs keystrokes and when TAB key is pressed using Event system
+	/*
+		For recording and handling events as they happen on this layer,
+		Needs reference to current layer event object
+	*/
+	void onEvent(Bezel::Event& e) override {
+		m_CameraController.onEvent(e);
 	}
 
 };

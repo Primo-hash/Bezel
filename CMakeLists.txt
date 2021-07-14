@@ -44,7 +44,15 @@ target_link_libraries(
   OpenGL::GL)
 
   add_custom_command(
+  # Assets to be copied to build folder
   TARGET ${PROJECT_NAME} POST_BUILD
   COMMAND ${CMAKE_COMMAND} -E copy_directory
   ${CMAKE_CURRENT_LIST_DIR}/assets
-  ${CMAKE_CURRENT_BINARY_DIR}/bin/assets)
+  ${CMAKE_CURRENT_BINARY_DIR}/bin/assets
+  
+  # GUI config to be copied to build folder
+  TARGET ${PROJECT_NAME} POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E copy
+  ${CMAKE_CURRENT_LIST_DIR}/imgui.ini
+  ${CMAKE_CURRENT_BINARY_DIR}/bin
+  )

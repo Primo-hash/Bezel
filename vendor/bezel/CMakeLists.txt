@@ -48,11 +48,12 @@ add_library(Engine STATIC
 	# /include/renderer
 	"include/renderer/Renderer.h" "include/renderer/RenderContext.h" "include/renderer/Shader.h" "include/renderer/Buffer.h"
 	"include/renderer/VertexArray.h" "include/renderer/RenderCommand.h" "include/renderer/RenderAPI.h"
-	"include/renderer/OrthographicCamera.h" "include/renderer/Texture.h"
+	"include/renderer/OrthographicCamera.h" "include/renderer/Texture.h" "include/renderer/CameraController.h"
 
 	# /src
 	"src/App.cpp" "src/Log.cpp" "src/Layer.cpp" "src/LayerStack.cpp" "src/Shader.cpp" "src/Buffer.cpp" "src/Renderer.cpp"
 	"src/VertexArray.cpp" "src/RenderAPI.cpp" "src/RenderCommand.cpp" "src/OrthographicCamera.cpp"  "src/Texture.cpp"
+	"src/CameraController.cpp"
 	
 	# /platform
 	"platform/desktop/DesktopWindow.cpp" "platform/desktop/DesktopWindow.h" 
