@@ -41,6 +41,18 @@ namespace Bezel {
 		return true;
 	}
 
+	bool App::onWindowResize(WindowResizeEvent& e) {
+		if (e.getWidth() == 0 || e.getHeight() == 0) {
+			m_Minimized = true;
+			return false;
+		}
+
+		m_Minimized = false;
+		Renderer::onWindowResize(e.getWidth(), e.getHeight());
+
+		return false;
+	}
+
 	void Bezel::App::run() {
 		// Simple window test
 		while (m_Running) {
@@ -49,9 +61,11 @@ namespace Bezel {
 			Timestep timestep = time - m_LastFrameTime;
 			m_LastFrameTime = time;
 
-			// Event handling by layer priority
-			for (Layer* layer : m_LayerStack) {
-				layer->onUpdate(timestep);
+			if (!m_Minimized) {		// Only if window open
+				// Event handling by layer priority
+				for (Layer* layer : m_LayerStack) {
+					layer->onUpdate(timestep);
+				}
 			}
 
 			// Render GUI
@@ -70,13 +84,13 @@ namespace Bezel {
 	*/
 	void App::onEvent(Event& e) {
 		EventDispatcher dispatcher(e);
-		dispatcher.Dispatch<WindowCloseEvent>(BZ_BIND_EVENT_FN(App::onWindowClose));
+		dispatcher.Dispatch<WindowCloseEvent>(BZ_BIND_EVENT_FN(App::onWindowClose));		// Binds the function that runs when window closes
+		dispatcher.Dispatch<WindowResizeEvent>(BZ_BIND_EVENT_FN(App::onWindowResize));	// Binds function that runs when window resizes
 
 		// Handle events in reverse, where overlays have priority
 		// Stops iteration if event has been handled
 		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();) {
-		    auto layer = (*--it);
-			layer->onEvent(e);
+			(*--it)->onEvent(e);
 			if (e.handled) { break; }
 		}
 	}

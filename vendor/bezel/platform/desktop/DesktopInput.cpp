@@ -14,7 +14,7 @@
 
 namespace Bezel {
 
-	Input* Input::s_Instance = new DesktopInput();
+	Scope<Input> Input::s_Instance = createScope<DesktopInput>();
 
 	bool DesktopInput::isKeyPressedImpl(int keycode) {
 		#if defined BZ_PLATFORM_WINDOWS

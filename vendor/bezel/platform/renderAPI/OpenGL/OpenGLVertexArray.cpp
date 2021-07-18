@@ -64,7 +64,7 @@ namespace Bezel {
 				shaderDataTypeToOpenGLBaseType(element.type),
 				element.normalized ? GL_TRUE : GL_FALSE,
 				layout.getStride(),
-				(const void*)(std::intptr_t)element.offset);	// casting to uintptr_t first avoids int to void* size discrepancy
+				(const void*)element.offset);	// casting to uintptr_t first avoids int to void* size discrepancy
 			m_VertexBufferIndex++;	// Increase index created to avoid buffers stacking.
 		}
 

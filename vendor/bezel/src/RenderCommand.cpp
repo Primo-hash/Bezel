@@ -5,6 +5,6 @@
 
 namespace Bezel {
 
-	RenderAPI* RenderCommand::s_RenderAPI = new OpenGLRenderAPI;
+	Scope<RenderAPI> RenderCommand::s_RenderAPI = createScope<OpenGLRenderAPI>();
 
 }

@@ -5,7 +5,7 @@ namespace Bezel {
 
 	class EXPORTED Input {
 	private:
-		static Input* s_Instance;
+		static Scope<Input> s_Instance;
 	protected:
 		Input() = default;
 		virtual bool isKeyPressedImpl(int keycode) = 0;

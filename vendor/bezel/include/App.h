@@ -7,7 +7,7 @@
 #include "events/Event.h"
 #include "events/AppEvent.h"
 
-#include "bezel/core/Timestep.h"
+#include "bezel/include/Timestep.h"
 
 #include "bezel/GUI/ImGui/ImGuiLayer.h"
 
@@ -17,6 +17,7 @@ namespace Bezel {
 	private:
 		static App* s_Instance;			// Application instance called by client
 		bool m_Running = true;			// Current application instance status
+		bool m_Minimized = false;		// Minimized window
 		float m_LastFrameTime = 0.0f;	// Time of last frame for this app
 
 		std::unique_ptr<Window> m_Window;
@@ -28,6 +29,7 @@ namespace Bezel {
 		ImGuiLayer* m_ImGuiLayer;
 
 		bool onWindowClose(WindowCloseEvent& e);
+		bool onWindowResize(WindowResizeEvent& e);
 	public:
 		App();
 		virtual ~App();			// Arvet av applikasjoner som bruker Bezel library

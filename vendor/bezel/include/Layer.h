@@ -6,7 +6,7 @@
 */
 
 #include "Core.h"
-#include "bezel/core/Timestep.h"
+#include "bezel/include/Timestep.h"
 #include "events/Event.h"
 
 namespace Bezel {

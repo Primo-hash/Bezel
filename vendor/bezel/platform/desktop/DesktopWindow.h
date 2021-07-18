@@ -17,7 +17,7 @@ namespace Bezel {
 	class DesktopWindow : public Window {
 	private:
 		GLFWwindow* m_Window;
-		RenderContext* m_Context;
+		Scope<RenderContext> m_Context;
 
 		struct WindowData
 		{

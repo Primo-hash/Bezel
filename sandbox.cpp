@@ -1,7 +1,10 @@
 /*
 	This is currently a testing ground for Bezel Engine features
+	using an example layer.
+	Other example layers in header and source folders are also included.
 */
 #include "bezel/Bezel.h"
+#include "bezel/include/Entrypoint.h"
 #include "bezel/platform/renderAPI/OpenGL/OpenGLShader.h"
 #include "imgui.h"
 
@@ -9,6 +12,8 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include <string>
+
+#include "Sandbox2D.h"	// Example layer making use of 2D renderer
 
 /*
 	An example Layer class that currently draws a GUI and a demonstration of renderer functionality
@@ -30,8 +35,8 @@ private:
 	// PROJECTION
 	Bezel::OrthographicCameraController m_CameraController;
 public:
-	ExampleLayer() : Layer("Layer"), m_CameraController(1280.0f / 720.0f) {
-		m_VertexArray.reset(Bezel::VertexArray::create());
+	ExampleLayer() : Layer("Layer"), m_CameraController(1600.0f / 900.0f) {
+		m_VertexArray = Bezel::VertexArray::create();
 
 		float vertices[3 * 7] = {
 			-0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
@@ -55,7 +60,7 @@ public:
 		indexBuffer.reset(Bezel::IndexBuffer::create(indices, sizeof(indices) / sizeof(uint32_t)));
 		m_VertexArray->setIndexBuffer(indexBuffer);
 
-		m_SquareVA.reset(Bezel::VertexArray::create());
+		m_SquareVA = Bezel::VertexArray::create();
 
 		// coords, texcoords
 		float squareVertices[5 * 4] = {
@@ -249,7 +254,8 @@ public:
 class SandBox : public Bezel::App {
 public:
 	SandBox() {
-		pushLayer(new ExampleLayer());	// Pushes example overlay with a GUI
+		//pushLayer(new ExampleLayer());	// Pushes example overlay with a GUI
+		pushLayer(new Sandbox2D());			// Pushes example layer for 2D rendering
 	}
 
 	~SandBox() {

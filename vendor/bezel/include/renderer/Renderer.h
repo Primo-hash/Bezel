@@ -19,9 +19,10 @@ namespace Bezel {
 			glm::mat4 viewProjectionMatrix;
 		};
 		
-		static SceneData* s_SceneData;
+		static Scope<SceneData> s_SceneData;
 	public:
 		static void init();
+		static void onWindowResize(uint32_t width, uint32_t height);
 
 		static void beginScene(OrthographicCamera &camera);
 		static void endScene();

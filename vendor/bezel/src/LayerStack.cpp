@@ -9,6 +9,7 @@ namespace Bezel {
 	LayerStack::~LayerStack() {
 		// Removes all layers on destruction
 		for (Layer* layer : m_Layers) {
+			layer->onDetach();	// protocol before deletion
 			delete layer;
 		}
 	}

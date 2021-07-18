@@ -113,3 +113,13 @@ same purpose but optimized for different platforms.
 
 NOTE: General header files are in /include directories, while source files are in /src directories.  
 Platform specific header and source pairs are togæåether in their respective folders.
+
+## DEBUG BUILDS
+For running a debug build in Bezel engine you can define a BZ_DEBUG flag  
+in the CMakeLists' public compile definitions, removing the flag will  
+build a release build.  
+
+# Sandbox camera controls  
+* Movement (W, A, S, D)  
+* Rotation (Q, E)  
+* Zoom (Mouse scroll)  

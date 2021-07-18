@@ -1,7 +1,7 @@
 #pragma once
 
 #include "bezel/include/renderer/OrthographicCamera.h"
-#include "bezel/core/Timestep.h"
+#include "bezel/include/Timestep.h"
 
 #include "bezel/include/events/AppEvent.h"
 #include "bezel/include/events/MouseEvent.h"
@@ -19,7 +19,7 @@ namespace Bezel {
 		bool m_Rotation;
 
 		glm::vec3 m_CameraPosition = { 0.0f, 0.0f, 0.0f };
-		float m_CameraRotation = 0.0f;
+		float m_CameraRotation = 0.0f;	// In degrees
 		float m_CameraTranslationSpeed = 5.0f, m_CameraRotationSpeed = 180.0f;
 
 		bool onMouseScrolled(MouseScrolledEvent& e);
@@ -32,6 +32,9 @@ namespace Bezel {
 
 		OrthographicCamera& getCamera() { return m_Camera; }
 		const OrthographicCamera& getCamera() const { return m_Camera; } // Incase a const camera obj is needed
+	
+		float getZoomLevel() const { return m_ZoomLevel; }
+		void setZoomLevel(float level) { m_ZoomLevel = level; }
 	};
 
 }

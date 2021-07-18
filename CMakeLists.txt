@@ -16,8 +16,21 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-add_executable(${PROJECT_NAME} sandbox.cpp)
+add_executable(${PROJECT_NAME} sandbox.cpp 
+# ./src
+"src/Sandbox2D.cpp" 
+
+# ./include
+"include/Sandbox2D.h"
+
+)
+
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
+
+include_directories(${PROJECT_NAME} INTERFACE 
+	${CMAKE_CURRENT_LIST_DIR}/include
+    ${CMAKE_CURRENT_LIST_DIR}/src
+)
 
 target_compile_definitions(${PROJECT_NAME} PUBLIC GLEW_STATIC)
 

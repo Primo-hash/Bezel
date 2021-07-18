@@ -42,7 +42,7 @@ namespace Bezel {
 		std::string name;
 		ShaderDataType type;
 		uint32_t size;
-		uint32_t offset;
+		size_t offset;
 		bool normalized;
 
 		BufferElement(ShaderDataType typ, const std::string& nvn, bool norm = false) : 
@@ -76,7 +76,7 @@ namespace Bezel {
 		uint32_t m_Stride = 0;
 
 		void CalculateOffsetsAndStride() {
-			uint32_t offset = 0;
+			size_t offset = 0;
 			m_Stride = 0;
 			for (auto& element : m_Elements) {
 				element.offset = offset;

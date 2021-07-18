@@ -2,6 +2,7 @@
 #include <signal.h>
 #include <memory>
 
+
 /*
 *	Eksporterer bibliotek basert på platform for klasser som bruker BEZEL_API,
 *   DLL blir importert hvis bibliotek er kompilert dynamisk, ellers definert som tom.
@@ -42,7 +43,7 @@
 #endif
 
 /*
-	Logging assertions based on condition parameter x.
+	Logging assertions based on condition parameter x, only applicable to debug builds.
 */
 #ifdef BZ_ENABLE_ASSERTS
 	#if defined BZ_PLATFORM_WINDOWS
@@ -77,10 +78,24 @@
 
 namespace Bezel {
 
+	/*
+		Custom pointer references for engine assets
+	*/
+	// Custom unique_ptr
 	template<typename T>
 	using Scope = std::unique_ptr<T>;
+	// Custom std::make_unique function
+	template<typename F, typename ... Args>
+	constexpr Scope<F> createScope(Args&& ... args) {
+		return std::make_unique<F>(std::forward<Args>(args)...);
+	}
 
+	// Custom shared_ptr
 	template<typename T>
 	using Ref = std::shared_ptr<T>;
-
+	// Custom std::make_shared function
+	template<typename F, typename ... Args>
+	constexpr Ref<F> createRef(Args&& ... args) {
+		return std::make_shared<F>(std::forward<Args>(args)...);
+	}
 }

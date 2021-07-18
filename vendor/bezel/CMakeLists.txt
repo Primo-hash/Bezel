@@ -32,15 +32,12 @@ add_library(Engine STATIC
 	# when to ask CMake to regenerate in some cases.
 	# That is why I have chosen to list manually.
 
-	# /core
-	"core/Timestep.h"
-
 	# /GUI/ImGui
 	"GUI/ImGui/ImGuiLayer.cpp" "GUI/ImGui/ImGuiLayer.h" "GUI/ImGui/ImGuiBuild.h"
 
 	# /include
 	"include/Entrypoint.h" "include/Core.h" "include/App.h" "include/Log.h" "include/Window.h"
-	"include/Layer.h" "include/LayerStack.h" "include/InputCodes.h" "include/Input.h"
+	"include/Layer.h" "include/LayerStack.h" "include/InputCodes.h" "include/Input.h" "include/Timestep.h"
 
 	# /include/events
 	"include/events/Event.h" "include/events/AppEvent.h" "include/events/KeyEvent.h" "include/events/MouseEvent.h"
@@ -49,11 +46,12 @@ add_library(Engine STATIC
 	"include/renderer/Renderer.h" "include/renderer/RenderContext.h" "include/renderer/Shader.h" "include/renderer/Buffer.h"
 	"include/renderer/VertexArray.h" "include/renderer/RenderCommand.h" "include/renderer/RenderAPI.h"
 	"include/renderer/OrthographicCamera.h" "include/renderer/Texture.h" "include/renderer/CameraController.h"
+	"include/renderer/Renderer2D.h"
 
 	# /src
 	"src/App.cpp" "src/Log.cpp" "src/Layer.cpp" "src/LayerStack.cpp" "src/Shader.cpp" "src/Buffer.cpp" "src/Renderer.cpp"
 	"src/VertexArray.cpp" "src/RenderAPI.cpp" "src/RenderCommand.cpp" "src/OrthographicCamera.cpp"  "src/Texture.cpp"
-	"src/CameraController.cpp"
+	"src/CameraController.cpp" "src/Renderer2D.cpp"
 	
 	# /platform
 	"platform/desktop/DesktopWindow.cpp" "platform/desktop/DesktopWindow.h" 

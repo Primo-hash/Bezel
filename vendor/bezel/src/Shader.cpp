@@ -52,7 +52,7 @@ namespace Bezel {
 		Loads shader from user's specified filepath
 		Inserts shader into shader library
 	*/
-	Bezel::Ref<Shader> ShaderLibrary::load(const std::string& filepath) {
+	Ref<Shader> ShaderLibrary::load(const std::string& filepath) {
 		auto shader = Shader::create(filepath);
 		add(shader);
 		return shader;
@@ -62,7 +62,7 @@ namespace Bezel {
 		Loads shader from user's specified filepath and creates custom name
 		Inserts shader into shader library
 	*/
-	Bezel::Ref<Shader> ShaderLibrary::load(const std::string& name, const std::string& filepath) {
+	Ref<Shader> ShaderLibrary::load(const std::string& name, const std::string& filepath) {
 		auto shader = Shader::create(filepath);
 		add(name, shader);
 		return shader;
@@ -71,7 +71,7 @@ namespace Bezel {
 	/*
 		Returns shader from shader lib map, if it exists
 	*/
-	Bezel::Ref<Shader> ShaderLibrary::get(const std::string& name)
+	Ref<Shader> ShaderLibrary::get(const std::string& name)
 	{
 		BZ_CORE_ASSERT(exists(name), "Shader not found in library!");
 		return m_Shaders[name];

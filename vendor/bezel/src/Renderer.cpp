@@ -1,14 +1,21 @@
 #include "bezel/Precompiled.h"
 #include "bezel/include/renderer/Renderer.h"
+#include "bezel/include/renderer/Renderer2D.h"
 
 #include "bezel/platform/renderAPI/OpenGL/OpenGLShader.h"
 
+
 namespace Bezel {
 
-	Renderer::SceneData* Renderer::s_SceneData = new Renderer::SceneData;
+	Scope<Renderer::SceneData> Renderer::s_SceneData = createScope<Renderer::SceneData>();
 
  	void Renderer::init() {
 		RenderCommand::init();
+		Renderer2D::init();
+	}
+
+	void Renderer::onWindowResize(uint32_t width, uint32_t height) {
+		RenderCommand::setViewport(0, 0, width, height);
 	}
 
 	void Renderer::beginScene(OrthographicCamera& camera) {

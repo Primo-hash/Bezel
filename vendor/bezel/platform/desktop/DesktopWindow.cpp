@@ -70,7 +70,7 @@ namespace Bezel {
 
 		m_Window = glfwCreateWindow((int)specs.width, (int)specs.height, m_Data.title.c_str(), nullptr, nullptr);
 		// Set OpenGL to render the context
-		m_Context = new OpenGLContext(m_Window);
+		m_Context = createScope<OpenGLContext>(m_Window);
 		m_Context->init();
 
 		glfwSetWindowUserPointer(m_Window, &m_Data);	

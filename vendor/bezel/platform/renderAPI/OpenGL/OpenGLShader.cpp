@@ -89,17 +89,19 @@ namespace Bezel {
 
 		const char* typeToken = "#type";
 		size_t typeTokenLength = strlen(typeToken);
-		size_t pos = source.find(typeToken, 0);
+		size_t pos = source.find(typeToken, 0);		// Beginning of shader #type declaration line
 		while (pos != std::string::npos) {
-			size_t eol = source.find_first_of("\r\n", pos);
+			size_t eol = source.find_first_of("\r\n", pos);		// End of shader #type declaration line
 			BZ_CORE_ASSERT(eol != std::string::npos, "Syntax error");
-			size_t begin = pos + typeTokenLength + 1;
+			size_t begin = pos + typeTokenLength + 1;	// Beginning of shader type name, after #type
 			std::string type = source.substr(begin, eol - begin);
 			BZ_CORE_ASSERT(ShaderTypeFromString(type), "Invalid shader type specified");
 
-			size_t nextLinePos = source.find_first_not_of("\r\n", eol);
-			pos = source.find(typeToken, nextLinePos);
-			shaderSources[ShaderTypeFromString(type)] = source.substr(nextLinePos, pos - (nextLinePos == std::string::npos ? source.size() - 1 : nextLinePos));
+			size_t nextLinePos = source.find_first_not_of("\r\n", eol); // Beginning of shader program after shader #type declaration
+			BZ_CORE_ASSERT(nextLinePos != std::string::npos, "Syntax error");
+			pos = source.find(typeToken, nextLinePos); // Beginning of next shader #type declaration
+
+			shaderSources[ShaderTypeFromString(type)] = (pos == std::string::npos) ? source.substr(nextLinePos) : source.substr(nextLinePos, pos - nextLinePos);
 		}
 		return shaderSources;
 	}
@@ -171,6 +173,7 @@ namespace Bezel {
 
 		for (auto id : glShaderIDs) {
 			glDetachShader(program, id);
+			glDeleteShader(id);
 		}
 	}
 
@@ -180,6 +183,22 @@ namespace Bezel {
 
 	void OpenGLShader::unbind() const {
 		glUseProgram(0);
+	}
+
+	void OpenGLShader::setInt(const std::string& name, int value) {
+		addUniformInt(name, value);
+	}
+
+	void OpenGLShader::setFloat3(const std::string& name, const glm::vec3& value) {
+		addUniformFloat3(name, value);
+	}
+
+	void OpenGLShader::setFloat4(const std::string& name, const glm::vec4& value) {
+		addUniformFloat4(name, value);
+	}
+
+	void OpenGLShader::setMat4(const std::string& name, const glm::mat4& value) {
+		addUniformMat4(name, value);
 	}
 
 	void OpenGLShader::addUniformInt(const std::string& name, int value) {
