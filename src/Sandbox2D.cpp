@@ -26,7 +26,7 @@ void Sandbox2D::onUpdate(Bezel::Timestep ts) {
 	Bezel::Renderer2D::beginScene(m_CameraController.getCamera());
 	// Testing Quad and textures
 	Bezel::Renderer2D::drawQuad({ -1.0f, 0.0f }, { 0.8f, 0.8f }, { 0.8f, 0.2f, 0.3f, 1.0f });
-	Bezel::Renderer2D::drawQuad({ 0.5f, -0.5f }, { 0.5f, 0.75f }, { 0.2f, 0.3f, 0.8f, 1.0f });
+	Bezel::Renderer2D::drawQuad({ 0.5f, -0.5f }, { 0.5f, 0.75f }, m_SquareColor);
 	Bezel::Renderer2D::drawQuad({ 0.0f, 0.0f, -0.1f }, { 10.0f, 10.0f }, m_CloudTexture);
 	Bezel::Renderer2D::endScene();
 }

@@ -10,17 +10,17 @@ namespace Bezel {
 
 	static GLenum shaderDataTypeToOpenGLBaseType(ShaderDataType type) {
 		switch (type) {
-		case Bezel::ShaderDataType::Float:    return GL_FLOAT;
-		case Bezel::ShaderDataType::Float2:   return GL_FLOAT;
-		case Bezel::ShaderDataType::Float3:   return GL_FLOAT;
-		case Bezel::ShaderDataType::Float4:   return GL_FLOAT;
-		case Bezel::ShaderDataType::Mat3:     return GL_FLOAT;
-		case Bezel::ShaderDataType::Mat4:     return GL_FLOAT;
-		case Bezel::ShaderDataType::Int:      return GL_INT;
-		case Bezel::ShaderDataType::Int2:     return GL_INT;
-		case Bezel::ShaderDataType::Int3:     return GL_INT;
-		case Bezel::ShaderDataType::Int4:     return GL_INT;
-		case Bezel::ShaderDataType::Bool:     return GL_BOOL;
+		case ShaderDataType::Float:    return GL_FLOAT;
+		case ShaderDataType::Float2:   return GL_FLOAT;
+		case ShaderDataType::Float3:   return GL_FLOAT;
+		case ShaderDataType::Float4:   return GL_FLOAT;
+		case ShaderDataType::Mat3:     return GL_FLOAT;
+		case ShaderDataType::Mat4:     return GL_FLOAT;
+		case ShaderDataType::Int:      return GL_INT;
+		case ShaderDataType::Int2:     return GL_INT;
+		case ShaderDataType::Int3:     return GL_INT;
+		case ShaderDataType::Int4:     return GL_INT;
+		case ShaderDataType::Bool:     return GL_BOOL;
 		default: BZ_CORE_ASSERT(false, "Unknown ShaderDataType!"); return 0;
 		}
 	}

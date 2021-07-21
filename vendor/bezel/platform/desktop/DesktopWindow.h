@@ -10,14 +10,14 @@
 */
 
 #include "bezel/include/Window.h"
-#include "bezel/include/renderer/RenderContext.h"
+#include "bezel/include/renderer/GraphicsLibraryContext.h"
 
 namespace Bezel {
 
 	class DesktopWindow : public Window {
 	private:
 		GLFWwindow* m_Window;
-		Scope<RenderContext> m_Context;
+		Scope<GraphicsLibraryContext> m_Context;
 
 		struct WindowData
 		{

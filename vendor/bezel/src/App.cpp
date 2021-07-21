@@ -15,7 +15,7 @@ namespace Bezel {
 		s_Instance = this;
 
 		// Simple test window to check the Window class and children's functionality
-		m_Window = std::unique_ptr<Window>(Window::create());
+		m_Window = Window::create();
 
 		// Default set of keyboard, mouse and application events running by default
 		m_Window->setEventCallback(BZ_BIND_EVENT_FN(App::onEvent));
@@ -29,7 +29,7 @@ namespace Bezel {
 	}
 
 	Bezel::App::~App() {
-
+		Renderer::shutdown();
 	}
 
 	/*

@@ -3,7 +3,6 @@
 #include "Log.h"
 #include "App.h"
 
-
 /*
 *	EntryPoint.h setter opp engine applikasjonen til å kjøre når en
 *	ekstern applikasjon lenker til Bezel

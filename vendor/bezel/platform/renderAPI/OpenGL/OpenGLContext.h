@@ -1,6 +1,6 @@
 #pragma once
 
-#include "bezel/include/renderer/RenderContext.h"
+#include "bezel/include/renderer/GraphicsLibraryContext.h"
 
 struct GLFWwindow;
 
@@ -9,7 +9,7 @@ namespace Bezel {
 	/*
 		OpenGL specific implementation class for context rendering
 	*/
-	class OpenGLContext : public RenderContext {
+	class OpenGLContext : public GraphicsLibraryContext {
 	private:
 		GLFWwindow* m_WindowHandle;
 	public:

@@ -21,6 +21,7 @@ namespace Bezel {
 		virtual void drawIndexed(const Ref<VertexArray>& vertexArray) = 0;
 
 		inline static API getAPI() { return s_API; }
+		static Scope<RenderAPI> create();
 	private:
 		static API s_API;
 	};

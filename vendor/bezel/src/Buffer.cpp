@@ -8,26 +8,26 @@
 
 namespace Bezel {
 
-	VertexBuffer* VertexBuffer::create(float* vertices, uint32_t size) {
+	Ref<VertexBuffer> VertexBuffer::create(float* vertices, uint32_t size) {
 		switch (Renderer::getAPI()) {
 		case RenderAPI::API::None:
 			BZ_CORE_ASSERT(false, "RenderAPI::None is currently not supported!");
 			return nullptr;
 		case RenderAPI::API::OpenGL:
-			return new OpenGLVertexBuffer(vertices, size);
+			return createRef<OpenGLVertexBuffer>(vertices, size);
 		default:
 			BZ_CORE_ASSERT(false, "Unknown RendererAPI!");
 			return nullptr;
 		}
 	}
 
-	IndexBuffer* IndexBuffer::create(uint32_t* indices, uint32_t size) {
+	Ref<IndexBuffer> IndexBuffer::create(uint32_t* indices, uint32_t size) {
 		switch (Renderer::getAPI()) {
 		case RenderAPI::API::None:
 			BZ_CORE_ASSERT(false, "RenderAPI::None is currently not supported!");
 			return nullptr;
 		case RenderAPI::API::OpenGL:
-			return new OpenGLIndexBuffer(indices, size);
+			return createRef<OpenGLIndexBuffer>(indices, size);
 		default:
 			BZ_CORE_ASSERT(false, "Unknown RendererAPI!");
 			return nullptr;

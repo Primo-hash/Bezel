@@ -44,8 +44,7 @@ public:
 			 0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
 		};
 
-		Bezel::Ref<Bezel::VertexBuffer> vertexBuffer;
-		vertexBuffer.reset(Bezel::VertexBuffer::create(vertices, sizeof(vertices)));
+		Bezel::Ref<Bezel::VertexBuffer> vertexBuffer = Bezel::VertexBuffer::create(vertices, sizeof(vertices));
 		Bezel::BufferLayout layout = {
 			{ Bezel::ShaderDataType::Float3, "a_Position" },
 			{ Bezel::ShaderDataType::Float4, "a_Color" }
@@ -56,8 +55,7 @@ public:
 
 		// Create indices
 		uint32_t indices[3] = { 0, 1, 2 };
-		Bezel::Ref<Bezel::IndexBuffer> indexBuffer;
-		indexBuffer.reset(Bezel::IndexBuffer::create(indices, sizeof(indices) / sizeof(uint32_t)));
+		Bezel::Ref<Bezel::IndexBuffer> indexBuffer = Bezel::IndexBuffer::create(indices, sizeof(indices) / sizeof(uint32_t));
 		m_VertexArray->setIndexBuffer(indexBuffer);
 
 		m_SquareVA = Bezel::VertexArray::create();
@@ -70,8 +68,7 @@ public:
 			-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
 		};
 
-		Bezel::Ref<Bezel::VertexBuffer> squareVB;
-		squareVB.reset(Bezel::VertexBuffer::create(squareVertices, sizeof(squareVertices)));
+		Bezel::Ref<Bezel::VertexBuffer> squareVB = Bezel::VertexBuffer::create(squareVertices, sizeof(squareVertices));
 		squareVB->setLayout({
 			{ Bezel::ShaderDataType::Float3, "a_Position" },
 			{ Bezel::ShaderDataType::Float2, "a_TexCoord" }
@@ -79,8 +76,7 @@ public:
 		m_SquareVA->addVertexBuffer(squareVB);
 
 		uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
-		Bezel::Ref<Bezel::IndexBuffer> squareIB;
-		squareIB.reset(Bezel::IndexBuffer::create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
+		Bezel::Ref<Bezel::IndexBuffer> squareIB = Bezel::IndexBuffer::create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t));
 		m_SquareVA->setIndexBuffer(squareIB);
 
 		// TRIANGLE SHADER PROGRAM
@@ -165,8 +161,8 @@ public:
 		m_Texture = Bezel::Texture2D::create("assets/textures/clouds.png");
 		m_CloudBerryTexture = Bezel::Texture2D::create("assets/textures/cloudberry.png");
 
-		std::dynamic_pointer_cast<Bezel::OpenGLShader>(textureShader)->bind();
-		std::dynamic_pointer_cast<Bezel::OpenGLShader>(textureShader)->addUniformInt("u_Texture", 0);
+		textureShader->bind();
+		textureShader->setInt("u_Texture", 0);
 	}
 
 	void onUpdate(Bezel::Timestep ts) override {
@@ -184,13 +180,13 @@ public:
 
 		// Submit our triangle with how to draw then what to draw
 		// in the scene
-		//Bezel::Renderer::submit(m_Shader, m_VertexArray);
+		Bezel::Renderer::submit(m_Shader, m_VertexArray);
 		
 		
 		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f)); // scales down on transformation
 
-		std::dynamic_pointer_cast<Bezel::OpenGLShader>(m_FlatColorShader)->bind();
-		std::dynamic_pointer_cast<Bezel::OpenGLShader>(m_FlatColorShader)->addUniformFloat3("u_Color", m_SquareColor);
+		m_FlatColorShader->bind();
+		m_FlatColorShader->setFloat3("u_Color", m_SquareColor);
 
 		for (int y = 0; y < 20; y++)		// Create square of 20 squares
 		{

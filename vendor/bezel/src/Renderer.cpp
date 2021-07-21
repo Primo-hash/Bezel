@@ -2,8 +2,6 @@
 #include "bezel/include/renderer/Renderer.h"
 #include "bezel/include/renderer/Renderer2D.h"
 
-#include "bezel/platform/renderAPI/OpenGL/OpenGLShader.h"
-
 
 namespace Bezel {
 
@@ -12,6 +10,10 @@ namespace Bezel {
  	void Renderer::init() {
 		RenderCommand::init();
 		Renderer2D::init();
+	}
+
+	void Renderer::shutdown() {
+		Renderer2D::shutdown();
 	}
 
 	void Renderer::onWindowResize(uint32_t width, uint32_t height) {
@@ -29,8 +31,8 @@ namespace Bezel {
 		// How to render
 		shader->bind();
 		// Following dynamic ptr makes renderer dependent on OpenGL, will be fixed in the future.
-		std::dynamic_pointer_cast<OpenGLShader>(shader)->addUniformMat4("u_ViewProjection", s_SceneData->viewProjectionMatrix);
-		std::dynamic_pointer_cast<OpenGLShader>(shader)->addUniformMat4("u_Transform", transform);
+		shader->setMat4("u_ViewProjection", s_SceneData->viewProjectionMatrix);
+		shader->setMat4("u_Transform", transform);
 		
 		// What to render
 		vertexArray->bind();

@@ -16,8 +16,7 @@ namespace Bezel {
 	/*
 		Stores specified window parameters
 	*/
-	struct WindowSpecs
-	{
+	struct WindowSpecs {
 		std::string title;
 		unsigned int width, height;
 
@@ -28,8 +27,7 @@ namespace Bezel {
 	/* 
 		Purely an interface class representing a desktop system based Window
 	*/
-	class EXPORTED Window
-	{
+	class EXPORTED Window {
 	public:
 		using EventCallbackFn = std::function<void(Event&)>;
 
@@ -51,7 +49,7 @@ namespace Bezel {
 		virtual void* getNativeWindow() const = 0;
 
 		// Returns pointer to a new Window object
-		static Window* create(const WindowSpecs& props = WindowSpecs());
+		static Scope<Window> create(const WindowSpecs& props = WindowSpecs());
 	};
 
 }

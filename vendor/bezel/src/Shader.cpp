@@ -14,7 +14,7 @@ namespace Bezel {
 	Ref<Shader> Shader::create(const std::string &filepath) {
 		switch (Renderer::getAPI()) {
 		case RenderAPI::API::None:    BZ_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
-		case RenderAPI::API::OpenGL:  return std::make_shared<OpenGLShader>(filepath);
+		case RenderAPI::API::OpenGL:  return createRef<OpenGLShader>(filepath);
 		default: BZ_CORE_ASSERT(false, "Unknown RendererAPI!"); return nullptr;
 		}
 	}
@@ -25,7 +25,7 @@ namespace Bezel {
 	Ref<Shader> Shader::create(const std::string &name, const std::string& vertexSrc, const std::string& fragmentSrc) {
 		switch (Renderer::getAPI()) {
 		case RenderAPI::API::None:    BZ_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
-		case RenderAPI::API::OpenGL:  return std::make_shared<OpenGLShader>(name, vertexSrc, fragmentSrc);
+		case RenderAPI::API::OpenGL:  return createRef<OpenGLShader>(name, vertexSrc, fragmentSrc);
 		default: BZ_CORE_ASSERT(false, "Unknown RendererAPI!"); return nullptr;
 		}
 	}

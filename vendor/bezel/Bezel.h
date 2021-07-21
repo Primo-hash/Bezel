@@ -2,6 +2,7 @@
 /*
 *	Bezel.h filen er hovedsakelig ment for applikasjoner som tar i bruk Bezel engine
 */
+#include "bezel/include/Core.h"
 #include "bezel/include/App.h"
 #include "bezel/include/Layer.h"
 #include "bezel/include/Log.h"

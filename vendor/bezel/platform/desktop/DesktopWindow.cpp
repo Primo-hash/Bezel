@@ -28,21 +28,18 @@ namespace Bezel {
 	/*
 		Returns pointer to new Window object initialized with WindowSpecs object parameter
 	*/
-	Window* Window::create(const WindowSpecs& specs)
-	{
-		return new DesktopWindow(specs);
+	Scope<Window> Window::create(const WindowSpecs& specs) {
+		return createScope<DesktopWindow>(specs);
 	}
 
 	/*
 		Sets up window data on window object creation
 	*/
-	DesktopWindow::DesktopWindow(const WindowSpecs& specs)
-	{
+	DesktopWindow::DesktopWindow(const WindowSpecs& specs) {
 		init(specs);
 	}
 
-	DesktopWindow::~DesktopWindow()
-	{
+	DesktopWindow::~DesktopWindow() {
 		shutdown();
 	}
 
@@ -50,16 +47,14 @@ namespace Bezel {
 		Initializes desktop window with specified data by user.
 		Logs window specs while creating.
 	*/
-	void DesktopWindow::init(const WindowSpecs& specs)
-	{
+	void DesktopWindow::init(const WindowSpecs& specs) {
 		m_Data.title = specs.title;
 		m_Data.width = specs.width;
 		m_Data.height = specs.height;
 
 		BZ_CORE_INFO("Creating window {0} ({1}, {2})", specs.title, specs.width, specs.height);
 
-		if (!s_GLFWInitialized)	// GLFW initialization with error logging
-		{
+		if (!s_GLFWInitialized)	{	// GLFW initialization with error logging
 			int success = glfwInit();
 			BZ_CORE_ASSERT(success, "Could not intialize GLFW!");
 
@@ -70,7 +65,7 @@ namespace Bezel {
 
 		m_Window = glfwCreateWindow((int)specs.width, (int)specs.height, m_Data.title.c_str(), nullptr, nullptr);
 		// Set OpenGL to render the context
-		m_Context = createScope<OpenGLContext>(m_Window);
+		m_Context = GraphicsLibraryContext::create(m_Window);
 		m_Context->init();
 
 		glfwSetWindowUserPointer(m_Window, &m_Data);	
@@ -194,19 +189,18 @@ namespace Bezel {
 	// The following functions are basic window actions to be utilized 
 	// by callback functions or the like.
 
-	void DesktopWindow::shutdown()
-	{
+	void DesktopWindow::shutdown() {
 		glfwDestroyWindow(m_Window);
+		BZ_CORE_INFO("Terminating GLFW");
+		glfwTerminate();
 	}
 
-	void DesktopWindow::onUpdate()
-	{
+	void DesktopWindow::onUpdate() {
 		glfwPollEvents();
 		m_Context->swapBuffers();
 	}
 
-	void DesktopWindow::setVSync(bool enabled)
-	{
+	void DesktopWindow::setVSync(bool enabled) {
 		if (enabled)	// Set vsync based on GLFW lib functions
 			glfwSwapInterval(1);
 		else
@@ -215,8 +209,7 @@ namespace Bezel {
 		m_Data.VSync = enabled;
 	}
 
-	bool DesktopWindow::isVSync() const
-	{
+	bool DesktopWindow::isVSync() const {
 		return m_Data.VSync;
 	}
 
