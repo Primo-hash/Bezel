@@ -89,8 +89,8 @@ namespace Bezel {
 
 		// Handle events in reverse, where overlays have priority
 		// Stops iteration if event has been handled
-		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();) {
-			(*--it)->onEvent(e);
+		for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); ++it) {
+			(*it)->onEvent(e);
 			if (e.handled) { break; }
 		}
 	}

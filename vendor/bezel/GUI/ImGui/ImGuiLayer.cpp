@@ -66,11 +66,12 @@ namespace Bezel {
 
 	/*
 		Handles UI to draw
-	*/
+
 	void ImGuiLayer::onImGuiRender() {
 		static bool show = true;
 		ImGui::ShowDemoWindow(&show);
 	}
+	*/
 
 	/*
 		Frame definition prefix

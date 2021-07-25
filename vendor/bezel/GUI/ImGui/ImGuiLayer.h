@@ -17,7 +17,7 @@ namespace Bezel {
 
 		virtual void onAttach() override;
 		virtual void onDetach() override;
-		virtual void onImGuiRender() override;
+		//virtual void onImGuiRender() override;
 
 		void begin();	// ImGui frame definition start
 		void end();		// ImGui frame definition stop

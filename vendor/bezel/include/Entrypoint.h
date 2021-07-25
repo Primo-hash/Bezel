@@ -11,7 +11,7 @@ extern Bezel::App* Bezel::createApp();
 
 int main(int argc, char** argv) {
 	// Intro
-	std::cout << "Running with Bezel engine\n";
+	std::cout << "Launching with Bezel engine\n";
 
 	// Logger
 	Bezel::Log::init();

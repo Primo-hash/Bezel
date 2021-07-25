@@ -61,15 +61,21 @@ namespace Bezel {
 		if (in) {
 			// ptr to end of file (iterator value now also size of file)
 			in.seekg(0, std::ios::end);
-			// resize result string to size of file using ptr iterator
-			result.resize(in.tellg());
-			// ptr back to beginnning
-			in.seekg(0, std::ios::beg);
-			// read file into string
-			in.read(&result[0], result.size());
-			// close file
-			in.close();
-		} else {
+			size_t size = in.tellg();	// size of file
+			if (size != -1) {
+				// resize result string to size of file using ptr iterator
+				result.resize(size);
+				// ptr back to beginnning
+				in.seekg(0, std::ios::beg);
+				// read file into string
+				in.read(&result[0], size);
+				// close file
+				in.close();
+			}
+			else {		// Empty file error handling
+				BZ_CORE_ERROR("Could not read from file '{0}'", filepath);
+			}
+		} else {	// Invalid/Non-existent file path error handling
 			BZ_CORE_ERROR("Could not open file '{0}'", filepath);
 		}
 

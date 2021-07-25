@@ -17,6 +17,7 @@
 #include <unordered_map>
 #include <unordered_set>
 
+// Logging access
 #include "bezel/include/Log.h"
 
 #ifdef _WIN32

@@ -26,6 +26,7 @@ target_include_directories(${PROJECT_NAME} INTERFACE
 target_precompile_headers(${PROJECT_NAME} INTERFACE "Precompiled.h")
 
 # Library files
+# - Only static compilation supported for now
 add_library(Engine STATIC
 	# I am aware of the usage of GLOB to add files by regex
 	# However it is strongly discouraged because the build system won't know
@@ -72,7 +73,7 @@ add_library(Engine STATIC
 
 # Engine uses alias as Bezel here for linking
 target_link_libraries(Engine PUBLIC 
-	Bezel
+	${PROJECT_NAME}
 	glad
 	libglew_static
 	glfw
@@ -82,7 +83,7 @@ target_link_libraries(Engine PUBLIC
 	stb
 	OpenGL::GL)
 
-add_library(Bezel::Engine ALIAS Bezel)
+add_library(Bezel::Engine ALIAS ${PROJECT_NAME})
 # Engine Options: 
 #	- BZ_DEBUG              // Debugging mode
 #   - BZ_DYNAMIC_LINK		// Required if this library is compiled as 'SHARED'
