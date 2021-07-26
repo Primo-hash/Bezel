@@ -8,10 +8,14 @@ project(Bezel VERSION ${BEZEL_VERSION} LANGUAGES CXX)
 find_package(OpenGL REQUIRED)
 include(GNUInstallDirs)
 
+# Stops GLFW from compiling test executables
+set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+
 # Dependencies
 add_subdirectory(vendor/glad)
 add_subdirectory(vendor/glfw-3.3.2)
-add_subdirectory(vendor/glew-cmake-2.1.0)
 add_subdirectory(vendor/glm-0.9.9.8)
 add_subdirectory(vendor/imgui)
 add_subdirectory(vendor/spdlog)
@@ -75,7 +79,6 @@ add_library(Engine STATIC
 target_link_libraries(Engine PUBLIC 
 	${PROJECT_NAME}
 	glad
-	libglew_static
 	glfw
 	glm
 	imgui
@@ -85,10 +88,9 @@ target_link_libraries(Engine PUBLIC
 
 add_library(Bezel::Engine ALIAS ${PROJECT_NAME})
 # Engine Options: 
-#	- BZ_DEBUG              // Debugging mode
-#   - BZ_DYNAMIC_LINK		// Required if this library is compiled as 'SHARED'
+#	- BZ_DEBUG			  // Debugging mode
+#   - BZ_DYNAMIC_LINK	  // Required if this library is compiled as 'SHARED'
 target_compile_definitions(Engine PUBLIC GLFW_INCLUDE_NONE BZ_DEBUG)
-
 
 # Compiler/Platform specific flags to allow exporting symbols for Bezel
 if (WIN32 OR CYGWIN)

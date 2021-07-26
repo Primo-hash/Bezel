@@ -7,6 +7,7 @@
 #include "bezel/include/Layer.h"
 #include "bezel/include/Log.h"
 
+// Delta time
 #include "bezel/include/Timestep.h"
 
 // Input handling

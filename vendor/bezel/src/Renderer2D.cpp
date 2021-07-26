@@ -74,7 +74,8 @@ namespace Bezel {
 		Draw quad with a 3D position and color
 	*/
 	void Renderer2D::drawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color) {
-		s_Data->textureShader->setFloat4("u_Color", color);
+		s_Data->textureShader->setFloat4("u_Color", color);		// Add color factor
+		s_Data->textureShader->setFloat("u_TileCount", 1.0f);	// Add default tiling count
 		s_Data->whiteTexture->bind();
 
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
@@ -85,20 +86,73 @@ namespace Bezel {
 	}
 
 	/*
-		Draw quad with a 2D position and texture
+		Draw quad with a 2D position, tilecount and texture
 	*/
-	void Renderer2D::drawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D>& texture) {
-		drawQuad({ position.x, position.y, 0.0f }, size, texture);
+	void Renderer2D::drawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D>& texture, float tileCount, const glm::vec4& tintColor) {
+		drawQuad({ position.x, position.y, 0.0f }, size, texture, tileCount, tintColor);
 	}
 
 	/*
-		Draw quad with a 3D position and texture
+		Draw quad with a 3D position, tilecount and texture
 	*/
-	void Renderer2D::drawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture) {
-		s_Data->textureShader->setFloat4("u_Color", glm::vec4(1.0f));
+	void Renderer2D::drawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, float tileCount, const glm::vec4& tintColor) {
+		s_Data->textureShader->setFloat4("u_Color", tintColor);
+		s_Data->textureShader->setFloat("u_TileCount", tileCount);
 		texture->bind();
 
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+		s_Data->textureShader->setMat4("u_Transform", transform);
+
+		s_Data->quadVertexArray->bind();
+		RenderCommand::drawIndexed(s_Data->quadVertexArray);
+	}
+
+	/*
+		Draw quad with a 2D position, rotation and color
+	*/
+	void Renderer2D::drawRotatedQuad(const glm::vec2& position, const glm::vec2& size, float rotation, const glm::vec4& color) {
+		drawRotatedQuad({ position.x, position.y, 0.0f }, size, rotation, color);
+	}
+
+	/*
+		Draw quad with a 3D position, rotation and color
+	*/
+	void Renderer2D::drawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const glm::vec4& color) {
+
+		s_Data->textureShader->setFloat4("u_Color", color);			// Add color factor
+		s_Data->textureShader->setFloat("u_TileCount", 1.0f);	// Add default tiling count
+		s_Data->whiteTexture->bind();
+
+		// Apply trafos using TRS.
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) 
+			* glm::rotate(glm::mat4(1.0f), rotation, { 0.0f, 0.0f, 1.0f }) 
+			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+		s_Data->textureShader->setMat4("u_Transform", transform);
+
+		s_Data->quadVertexArray->bind();
+		RenderCommand::drawIndexed(s_Data->quadVertexArray);
+	}
+
+
+	/*
+		Draw quad with a 2D position, rotation, tilecount and texture
+	*/
+	void Renderer2D::drawRotatedQuad(const glm::vec2& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture, float tileCount, const glm::vec4& tintColor) {
+		drawRotatedQuad({ position.x, position.y, 0.0f }, size, rotation, texture, tileCount, tintColor);
+	}
+
+	/*
+		Draw quad with a 3D position, rotation, tilecount and texture
+	*/
+	void Renderer2D::drawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture, float tileCount, const glm::vec4& tintColor) {
+
+		s_Data->textureShader->setFloat4("u_Color", tintColor);
+		s_Data->textureShader->setFloat("u_TileCount", tileCount);
+		texture->bind();
+
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
+			* glm::rotate(glm::mat4(1.0f), rotation, { 0.0f, 0.0f, 1.0f })
+			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 		s_Data->textureShader->setMat4("u_Transform", transform);
 
 		s_Data->quadVertexArray->bind();

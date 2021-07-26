@@ -11,6 +11,7 @@
 	The timer class is an insource class used to profile engine performance 
 	on a function by function basis. Profiling in this case could be the collection of
 	data for each function on a frame by frame basis in game loop.
+	TODO: Move to engine
 */
 template<typename Fn>
 class Timer {
@@ -77,10 +78,15 @@ void Sandbox2D::onUpdate(Bezel::Timestep ts) {
 		// Camera
 		Bezel::Renderer2D::beginScene(m_CameraController.getCamera());
 		
-		// Testing Quad and textures
-		Bezel::Renderer2D::drawQuad({ -1.0f, 0.0f }, { 0.8f, 0.8f }, { 0.8f, 0.2f, 0.3f, 1.0f });
+		// Testing Quad and texture drawing
+
+		// Normal Quad with rotation and flat color
+		Bezel::Renderer2D::drawRotatedQuad({ -1.0f, 0.0f }, { 0.8f, 0.8f }, glm::radians(-45.0f), { 0.8f, 0.2f, 0.3f, 1.0f });
+		// Quad w/color connected to GUI and customizable
 		Bezel::Renderer2D::drawQuad({ 0.5f, -0.5f }, { 0.5f, 0.75f }, m_SquareColor);
-		Bezel::Renderer2D::drawQuad({ 0.0f, 0.0f, -0.1f }, { 10.0f, 10.0f }, m_CloudTexture);
+		// Using a texture and repeats it 10 times within scale constriction
+		Bezel::Renderer2D::drawQuad({ 0.0f, 0.0f, -0.1f }, { 10.0f, 10.0f }, m_CloudTexture, 10.f);
+		
 		Bezel::Renderer2D::endScene();
 	}
 	

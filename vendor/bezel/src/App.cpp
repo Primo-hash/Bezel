@@ -6,6 +6,8 @@
 //#include "bezel/include/renderer/Renderer.h"
 #include <GLFW/glfw3.h>
 
+#include "bezel/vendor/stb/stb_image.h"
+
 namespace Bezel {
 
 	App* App::s_Instance = nullptr;
@@ -16,6 +18,24 @@ namespace Bezel {
 
 		// Simple test window to check the Window class and children's functionality
 		m_Window = Window::create();
+
+		// Default set of keyboard, mouse and application events running by default
+		m_Window->setEventCallback(BZ_BIND_EVENT_FN(App::onEvent));
+
+		// Call init of abstracted renderer
+		Renderer::init();
+
+		// Native GUI instance overlay for the application
+		m_ImGuiLayer = new ImGuiLayer();
+		pushOverlay(m_ImGuiLayer);
+	}
+
+	Bezel::App::App(WindowSpecs specs) : m_WindowSpecs(specs) {
+		BZ_CORE_ASSERT(!s_Instance, "Application already exists!");
+		s_Instance = this;
+
+		// Simple test window to check the Window class and children's functionality
+		m_Window = Window::create(m_WindowSpecs);
 
 		// Default set of keyboard, mouse and application events running by default
 		m_Window->setEventCallback(BZ_BIND_EVENT_FN(App::onEvent));
@@ -95,6 +115,18 @@ namespace Bezel {
 		}
 	}
 	
+	/*
+		Sets the current application's window icon to the specified image path
+	*/
+	void App::setAppIcon(std::string path) {
+		auto window = static_cast<GLFWwindow*>(m_Window->getNativeWindow());
+		GLFWimage windowIcon[1];
+
+		windowIcon[0].pixels = stbi_load(path.c_str(), &windowIcon[0].width, &windowIcon[0].height, 0, 4); //rgba channels 
+		glfwSetWindowIcon(window, 1, windowIcon);
+		stbi_image_free(windowIcon[0].pixels);
+	}
+
 	void App::pushLayer(Layer* layer) {
 		m_LayerStack.pushLayer(layer);
 	}

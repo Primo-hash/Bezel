@@ -16,13 +16,36 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-add_executable(${PROJECT_NAME} sandbox.cpp 
-# ./src
-"src/Sandbox2D.cpp" "src/ExampleLayer.cpp"
+# Debugging mode
+set(DEBUG true)
 
-# ./include/layers
-"include/layers/Sandbox2D.h" "include/layers/ExampleLayer.h"
+# Debug on (Currently only windows)
+if(NOT ${DEBUG})
+    if (WIN32 OR CYGWIN)
+        # Removes debug/log console
+        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup")
+
+        add_executable(${PROJECT_NAME} WIN32 sandbox.cpp 
+        # ./src
+        "src/Sandbox2D.cpp" "src/ExampleLayer.cpp"
+
+        # ./include/layers
+        "include/layers/Sandbox2D.h" "include/layers/ExampleLayer.h"
+        )
+    endif (WIN32 OR CYGWIN)
+endif(NOT ${DEBUG})
+
+# Debug off
+if (${DEBUG})
+    # UNIX (including MAC OS X)
+	add_executable(${PROJECT_NAME} sandbox.cpp 
+    # ./src
+    "src/Sandbox2D.cpp" "src/ExampleLayer.cpp"
+
+    # ./include/layers
+    "include/layers/Sandbox2D.h" "include/layers/ExampleLayer.h"
  )
+endif (${DEBUG})
 
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
 
@@ -46,7 +69,6 @@ target_link_libraries(
   ${PROJECT_NAME}
   Engine
   glad
-  libglew_static
   glfw
   glm
   imgui

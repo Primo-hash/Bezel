@@ -20,7 +20,8 @@ namespace Bezel {
 		bool m_Minimized = false;		// Minimized window
 		float m_LastFrameTime = 0.0f;	// Time of last frame for this app
 
-		std::unique_ptr<Window> m_Window;
+		const WindowSpecs m_WindowSpecs;
+		Scope<Window> m_Window;
 		
 		// General layer/overlay stack
 		LayerStack m_LayerStack;
@@ -32,6 +33,7 @@ namespace Bezel {
 		bool onWindowResize(WindowResizeEvent& e);
 	public:
 		App();
+		App(WindowSpecs specs);
 		virtual ~App();			// Arvet av applikasjoner som bruker Bezel library
 
 		void run();				// Runs application loop
@@ -43,9 +45,11 @@ namespace Bezel {
 		// returns pointer to application instance
 		inline static App& get() { return *s_Instance; }
 
-		void pushLayer(Layer* layer);		// Inserts layer to LayerStack
-		void popLayer(Layer* layer);		// Pops a layer from the LayerStack
-		void pushOverlay(Layer* overlay);	// Integrated functions for overlay layers to better identify overlays
+		void setAppIcon(std::string path);		// Creates an application icon 
+
+		void pushLayer(Layer* layer);			// Inserts layer to LayerStack
+		void popLayer(Layer* layer);			// Pops a layer from the LayerStack
+		void pushOverlay(Layer* overlay);		// Integrated functions for overlay layers to better identify overlays
 		void popOverlay(Layer* overlay);
 	};
 

@@ -38,7 +38,11 @@ public:
 */
 class SandBox : public Bezel::App {
 public:
-	SandBox() {
+	SandBox(Bezel::WindowSpecs specs) : App(specs) {
+		// SETUP
+		setAppIcon("assets/textures/cloudberry.png");
+
+		// LAYERS
 		//pushLayer(new ExampleLayer());	// Pushes example overlay with a GUI
 		pushLayer(new Sandbox2D());			// Pushes example layer for 2D rendering
 	}
@@ -53,5 +57,7 @@ public:
 	The createApp function has to be defined by the application.
 */
 Bezel::App* Bezel::createApp() {
-	return new SandBox();
+	auto windowSpecs = Bezel::WindowSpecs("Sandbox", 1080, 720);
+
+	return new SandBox(windowSpecs);
 }

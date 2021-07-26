@@ -70,7 +70,7 @@ namespace Bezel {
 
 		glfwSetWindowUserPointer(m_Window, &m_Data);	
 		setVSync(true);								// Vsync on by default
-	
+
 		/*
 		The following callback functions utilize the GLFW library to abstract window events
 		while tying them to a certain application's window object (possibly multiple).

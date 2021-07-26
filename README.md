@@ -119,6 +119,9 @@ For running a debug build in Bezel engine you can define a BZ_DEBUG flag
 in the CMakeLists' public compile definitions, removing the flag will  
 build a release build.  
 
+The example application runs with a 'DEBUG' bool set in cmake as an example
+for displaying or hiding the logging console for windows.
+
 # Sandbox camera controls  
 * Movement (W, A, S, D)  
 * Rotation (Q, E)  
